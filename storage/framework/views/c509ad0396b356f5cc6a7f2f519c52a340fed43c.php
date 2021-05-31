@@ -1,0 +1,1 @@
+<p>dashboard home page</p><?php /**PATH C:\xampp\htdocs\coffee_pos\resources\views/Dashboard/index.blade.php ENDPATH**/ ?>
