@@ -1,0 +1,71 @@
+/* ==============================
+    Dashboard Product StyleSheet 
+================================= */
+
+/* ########### Index Page ########### */
+/* breadcrumb heading input */
+.breadcrumb-search-box {
+    padding: .5em 2em .5em 2em;
+    outline: unset;
+    font-size: 12px;
+    border-radius: 5px;
+    border: .5px solid rgba(161, 160, 160, 0.494);
+}
+
+/* product description */
+.show-description{
+    display: block;
+    width: 110px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* product table */
+.product-table-listing-wrapper thead{
+    background-color: #EFEFEF;
+}
+.product-table-listing-wrapper thead tr th {
+    color: rgb(54, 54, 54);
+    font-size: 13px;
+}
+.product-table-listing-wrapper tbody{
+    border-bottom: .5px solid rgba(190, 187, 187, 0.494);
+}
+.table td, 
+.table th {
+    vertical-align: middle;
+}
+
+/* ########### Add Page ########### */
+
+/* product image */
+.product-image-upload {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+#image-name-text {
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#browse-btn {
+    width: 5em;
+    color: white;
+    border-radius: 2px;
+    cursor: pointer;
+    text-align: center;
+    background-color: #2892B2;
+}
+
+
+/* ########### Media Query ########### */
+/* ----- desktop ----- */
+
+
+/* ----- tablet ----- */
+
+
+/* ----- mobile ----- */
+
