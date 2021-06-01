@@ -1,0 +1,212 @@
+/*###################
+    POS Stylesheet 
+#####################*/
+
+/* ####### Layout Css ####### */
+
+/**** app ****/
+.pos-main-wrapper {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+/**** pos navbar *****/
+.pos-header {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    border-bottom: 1px solid rgb(168, 167, 167);
+}
+
+/* pos logo */
+.logo-wrapper {
+    flex: 0 1 30%;
+    padding-left: 1em;
+}
+.logo-image-wrapper {
+    display: flex;
+    max-width: 80px;
+    max-height: 80px;
+    overflow: hidden;
+}
+.logo-image-wrapper img {
+    width: 100%;
+}
+
+/* place holder */
+.place-holder-wrapper {
+    flex: 1 0 50%;
+}
+
+/* system options */
+.system-options-wrapper {
+    flex: 1 0 20%;
+    display: flex;
+    flex-flow: row wrap;
+    align-content: center;
+    justify-content: flex-end;
+}
+/* user */
+.system-user-wrapper p {
+    font-size: 18px;
+    margin: 0 1em 0 0;
+    color: rgb(173, 169, 169);
+}
+/* system close btn */
+.system-close-btn-wrapper p {
+    font-size: 14px;
+    cursor: pointer;
+    margin: 4px 2em 0 0;
+}
+
+/* ####### Pos Index Css ####### */
+.main-pos-container {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+}
+/* pos content */
+.pos-content-wrapper {
+    flex: 0 1 60%;
+    border-left: 1px solid rgb(153, 148, 148);
+}
+
+/* ####### Order Sidebar Css ####### */
+.order-sidebar-wrapper {
+    flex: 0 1 40%;
+    height: 86vh;
+    display: flex;
+    flex-flow: column wrap;
+}
+/* order info screen */
+.order-info-screen-wrapper {
+    display: flex;
+    padding: 1em 0 2em 0;
+    flex-flow: column wrap;
+    border-bottom: 1px solid rgb(153, 148, 148);
+}
+/* empty cart */
+.empty-cart-img-wrapper {
+    display: flex;
+    max-width: 150px;
+    overflow: hidden;
+    align-self: center;
+    flex-flow: column wrap;
+}
+.empty-cart-img-wrapper img {
+    width: 100%;
+}
+.empty-cart-img-wrapper p {
+    color:black;
+    font-size: 20px;
+    text-align: center;
+}
+/* order product lists */
+.order-product-list-wrapper {
+    display: flex;
+    max-height: 50px;
+    flex-flow: column wrap;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.order-product-list-wrapper .product-wrapper {
+    display: flex;
+}
+/* order system options */
+.order-system-options {
+    display: flex;
+    padding: .6em;
+    flex-flow: row wrap;
+}
+/* action pad block */
+.action-pad-block {
+    flex: 0 1 50%;
+    display: flex;
+    flex-flow: column wrap;
+    border-radius: 10px;
+    border: .5px solid rgb(153, 148, 148);
+}
+/* customer */
+.customer-wrapper {
+   display: flex;
+   flex: 0 1 30%;
+   cursor: pointer;
+   align-items: center;
+   padding: .5em 1em .5em 1em;
+   flex-flow: row wrap;
+   border-radius: 10px;
+   border-bottom: .5px solid rgb(153, 148, 148);
+}
+.customer-wrapper:hover {
+    background-color: rgb(223, 217, 217);
+}
+/* icon */
+.customer-wrapper .icon-wrapper {
+    display: flex;
+    max-width: 40px;
+    overflow: hidden;
+}
+.customer-wrapper .icon-wrapper img {
+    width: 100%;
+    border-radius: 50px;
+}
+/* name */
+.customer-wrapper .name {
+    flex: 1 0 auto;
+}
+.customer-wrapper .name p {
+    margin: 0;
+    font-weight: bold;
+    text-align: center;
+}
+/* payment */
+.payment-wrapper {
+    display: flex;
+    flex: 0 1 70%;
+    padding: 2em 0 0 0;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+    align-content: center;
+    flex-flow: column wrap;
+    border-radius: 10px;
+}
+.payment-wrapper:hover {
+    background-color: rgb(223, 217, 217);
+}
+.payment-button-wrapper {
+    display: flex;
+    max-width: 60px;
+    overflow: hidden;
+}
+.payment-button-wrapper img {
+    width: 100%;
+    border-radius: 50px;
+}
+/* num pad block */
+.num-pad-block {
+    flex: 0 1 50%;
+    justify-content: center;
+    padding-left: .4em;
+    display: flex;
+    flex-flow: column wrap;
+}
+.num-pad-row {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+}
+.num-pad-column {
+    flex: 0 1 25%;
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bolder;
+    padding: .5em 0 .5em 0;
+    border: .5px solid rgb(153, 148, 148);
+}
+.num-pad-column p { margin: 0; }
+.num-pad-column:hover {
+    background-color: rgb(223, 217, 217);
+}
+

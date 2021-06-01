@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +13,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::namespace('Pos')->group(function(){
+    // pos router
+    Route::get('/', 'PosController@index')->name('pos-home');
+
+    // 
 });

@@ -466,6 +466,7 @@ class ComposerStaticInita1c7f835b96d15f00db605518d897519
         'App\\Http\\Controllers\\Dashboard\\SugarLevelController' => __DIR__ . '/../..' . '/app/Http/Controllers/Dashboard/SugarLevelController.php',
         'App\\Http\\Controllers\\Dashboard\\TypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Dashboard/TypeController.php',
         'App\\Http\\Controllers\\Dashboard\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Dashboard/UserController.php',
+        'App\\Http\\Controllers\\Pos\\PosController' => __DIR__ . '/../..' . '/app/Http/Controllers/Pos/PosController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\CheckForMaintenanceMode' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckForMaintenanceMode.php',

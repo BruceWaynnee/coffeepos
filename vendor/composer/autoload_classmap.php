@@ -31,6 +31,7 @@ return array(
     'App\\Http\\Controllers\\Dashboard\\SugarLevelController' => $baseDir . '/app/Http/Controllers/Dashboard/SugarLevelController.php',
     'App\\Http\\Controllers\\Dashboard\\TypeController' => $baseDir . '/app/Http/Controllers/Dashboard/TypeController.php',
     'App\\Http\\Controllers\\Dashboard\\UserController' => $baseDir . '/app/Http/Controllers/Dashboard/UserController.php',
+    'App\\Http\\Controllers\\Pos\\PosController' => $baseDir . '/app/Http/Controllers/Pos/PosController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
     'App\\Http\\Middleware\\CheckForMaintenanceMode' => $baseDir . '/app/Http/Middleware/CheckForMaintenanceMode.php',
