@@ -9,11 +9,7 @@
         </div>
         {{-- order product lists --}}
         <div class="order-product-list-wrapper">
-            {{-- @for ($i = 0; $i < 10; $i++)
-            <div class="product-wrapper">
-                <p>product 1</p>
-            </div>
-            @endfor --}}
+            
         </div>
     </div>
     {{-- order system options --}}

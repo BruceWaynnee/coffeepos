@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Pos;
 
+use App\Category;
 use App\Http\Controllers\Controller;
+use App\Product;
 use Illuminate\Http\Request;
 
 class PosController extends Controller
@@ -13,7 +15,21 @@ class PosController extends Controller
      */
     public function index()
     {
-        return view('pos/index');
+        // get all category records
+        $categories = Category::getCategories();
+        if(!$categories->data){
+            return view('pos/index')->with('error', $categories->message);
+        }
+        $categories = $categories->data;        
+
+        // get all product records
+        $products = Product::getProducts();
+        if(!$products->data){
+            return view('pos/index')->with('error', $products->message);
+        }
+        $products = $products->data;
+
+        return view( 'pos/index', compact('categories', 'products') );
     }
 
     /**

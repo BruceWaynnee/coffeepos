@@ -68,7 +68,78 @@
 /* pos content */
 .pos-content-wrapper {
     flex: 0 1 60%;
+    display: flex;
+    flex-flow: row wrap;
+    align-content: flex-start;
     border-left: 1px solid rgb(153, 148, 148);
+}
+/* category list */
+.pos-category-wrapper {
+    flex: 0 1 100%;
+    border-bottom: 2px solid rgb(224, 152, 18);
+}
+.category-ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-flow: row wrap;
+    list-style-type: none;
+}
+.category-ul .category-li {
+    flex: 0 1 20%;
+    display: flex;
+    font-size: 15px;
+    cursor: pointer;
+    justify-content: center;
+    border-left: 1px solid rgb(153, 148, 148);
+}
+.category-ul .category-li a img {
+    width: 45px;
+}
+.category-ul .category-li a {
+    align-self: center;
+    color: rgb(92, 90, 90);
+}
+/* product list */
+.pos-product-wrapper {
+    max-height: 79vh;
+    flex: 0 1 100%;
+    display: flex;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    flex-flow: row wrap;
+    background-color: rgb(243, 243, 235);
+}
+.product-card-wrapper {
+    flex: 0 1 25%;
+    margin-top: 1em;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+.card-item{
+    width: 80%;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    flex-flow: column wrap;
+    justify-content: space-between;
+}
+/* image */
+.product-card-image {
+    display: flex;
+    width: 130px;
+    max-height: 160px;
+    overflow: hidden;
+}
+.product-card-image img {
+    width: 100%;
+}
+/* name */
+.product-card-name {
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
 }
 
 /* ####### Order Sidebar Css ####### */
@@ -80,6 +151,7 @@
 }
 /* order info screen */
 .order-info-screen-wrapper {
+    height: 43vh;
     display: flex;
     padding: 1em 0 2em 0;
     flex-flow: column wrap;
@@ -114,9 +186,11 @@
 }
 /* order system options */
 .order-system-options {
+    height: 43vh;
     display: flex;
     padding: .6em;
     flex-flow: row wrap;
+    background-color: rgb(243, 235, 235);
 }
 /* action pad block */
 .action-pad-block {

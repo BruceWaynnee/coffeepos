@@ -10,7 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- icon --}}
-    <link rel="shortcut icon" href="{{asset('icon/')}}" />
+    <link rel="shortcut ic  on" href="{{asset('icon/')}}" />
 
     {{-- title --}}
     <title>
