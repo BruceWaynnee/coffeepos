@@ -153,8 +153,11 @@
 .order-info-screen-wrapper {
     height: 43vh;
     display: flex;
+    /* overflow-x: hidden;
+    overflow-y: scroll; */
     padding: 1em 0 2em 0;
     flex-flow: column wrap;
+    justify-content: space-between;
     border-bottom: 1px solid rgb(153, 148, 148);
 }
 /* empty cart */
@@ -175,14 +178,36 @@
 }
 /* order product lists */
 .order-product-list-wrapper {
+    width: 100%;
     display: flex;
-    max-height: 50px;
-    flex-flow: column wrap;
+    max-height: 28vh;
     overflow-x: hidden;
     overflow-y: scroll;
+    flex-direction: column;
 }
-.order-product-list-wrapper .product-wrapper {
+.productvariant-row {
+    width: 100%;
     display: flex;
+    flex-flow: row wrap;
+    padding: 0 1em 0 1em;
+    justify-content: space-between;
+}
+.productvariant-row-active {
+    background-color: rgb(245, 239, 239);
+}
+/* grand total */
+.grand-total-wrapper {
+    display: flex;
+    font-size: 18px;
+    margin-right: 1em;
+    font-weight: bold;
+    flex-flow: row wrap;
+    align-self: flex-end;
+    border-top: 3px solid rgb(99, 96, 96);
+}
+.grand-total-wrapper #total-text{
+    margin-left: 3px;
+    color: rgb(25, 156, 25);
 }
 /* order system options */
 .order-system-options {

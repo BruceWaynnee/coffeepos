@@ -8,8 +8,13 @@
             <p>Order Is Empty</p>
         </div>
         {{-- order product lists --}}
-        <div class="order-product-list-wrapper">
-            
+        <div id="order-product-list-wrapper" class="order-product-list-wrapper">
+            {{-- Js Injections --}}
+        </div>
+        {{-- grand total --}}
+        <div class="grand-total-wrapper">
+            <p>Total: $</p>
+            <p id="total-text">0.00</p>
         </div>
     </div>
     {{-- order system options --}}
