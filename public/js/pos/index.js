@@ -42,6 +42,7 @@ function onCategoryClickedShowProducts(){
 
         // productvariant row
         var tr = $("<tr></tr>")
+            .attr('id', item.id)
             .attr('price', item.price)
             .attr('productVariantName', item.name)
             .addClass('addVariant cursor-pointer');
@@ -71,11 +72,20 @@ function onCategoryClickedShowProducts(){
 
     });
 
-    // on add variant row click add to sidebar
+    onVariantSelectAddToSideBar();
+}
+
+/**
+ * Add selected product variant from modal popup into pos product variant 
+ * list sidebar.
+ * @return void
+ */
+function onVariantSelectAddToSideBar(){
     $('.addVariant').on('click', function(){
         var currentRow = $(this);
+        var pvId  = currentRow.attr('id');
         var price = currentRow.attr('price');
-        var name = currentRow.attr('productVariantName');
+        var name  = currentRow.attr('productVariantName');
         
         // disable order is empty sidebar view
         $('.empty-cart-img-wrapper').addClass('d-none');
@@ -83,44 +93,154 @@ function onCategoryClickedShowProducts(){
         $('.order-product-list-wrapper').removeClass('d-none');
         $('.grand-total-wrapper').removeClass('d-none');
 
-        console.log(price +'<br>'+ name);
-        
-        var productVariantSideBarListWrapper = $('#order-product-list-wrapper');
 
-        var div_productVarRow = $('<div></div>')
-            .addClass('productvariant-row cursor-pointer');
+        // check duplicate product variant items
+        var isDuplicate = false;
+        $('.productvariant-row').each(function(index, object){
+            if(object.id == pvId){
+                // increase product variant item quantity by one
+                var priceTagId = '#'+pvId+'-price-text';
+                var oldQtn = parseInt( $(priceTagId).text() );
+                
+                // change quantity text
+                $(priceTagId).text(oldQtn+=1);
 
-            // name
-            var p_productVarName = $('<p></p>')
-                .html(name)
-                .appendTo(div_productVarRow);
+                // modified total price
+                changeTotalPriceText( $(object).attr('price') );
 
-            // price
-            var p_productVarPrice = $('<p></p>')
-                .html(price +' $')
-                .appendTo(div_productVarRow);
-            
-            // quantity
-            var p_productVarPrice = $('<p></p>')
-                .html('Quantity: 1')
-                .appendTo(div_productVarRow);
-            
-        productVariantSideBarListWrapper.append(div_productVarRow);
-
-        $('#products-modal').modal('hide');
-
-        // on productvariant row click active current row
-        $('.productvariant-row').on('click', function(){
-            var currentRow = $(this);
-
-            // remove previous active row and apply corruent
-            $('.productvariant-row').removeClass('productvariant-row-active');
-            currentRow.addClass('productvariant-row-active');
-
-
+                isDuplicate = true;
+                return false;
+            }
         });
 
-    });
+        if(!isDuplicate){
+            generateSidebarProductVariantItem(pvId, name, price);
+        }
+        
+        $('#products-modal').modal('hide');
 
+        onSideBarProductVariantRowClickActive();
+
+    });    
 }
 
+/**
+ * Generate product variant item into pos sidebar.
+ * @param [String] name 
+ * @param [String] price
+ * @return void
+ */
+function generateSidebarProductVariantItem(pvId, name, price){
+    // generate productvariant item list
+    var productVariantSideBarListWrapper = $('#order-product-list-wrapper');
+
+    var div_productVarRow = $('<div></div>')
+        .attr('id', pvId)
+        .attr('price', price)
+        .addClass('productvariant-row cursor-pointer');
+
+        // name
+        var p_productVarName = $('<p></p>')
+            .html(name)
+            .appendTo(div_productVarRow);
+
+        // price
+        var p_productVarPrice = $('<p></p>')
+            .html(price +' $')
+            .appendTo(div_productVarRow);
+        
+        // quantity
+        var p_productVarPrice = $('<p></p>')
+            .html('Quantity: ');
+            var p_productVarPriceSmall = $('<small id="'+pvId+'-price-text" style="font-size: 14px;"></small>')
+                .html(1)
+                .appendTo(p_productVarPrice);
+        div_productVarRow.append(p_productVarPrice);
+        
+    productVariantSideBarListWrapper.append(div_productVarRow);
+
+    // replace total price
+    changeTotalPriceText(price);
+}
+
+/**
+ * Modified product variant total price.
+ * @param [Integer] price
+ * @return void
+ */
+function changeTotalPriceText(price){
+    var p_totalText = $('#total-text');
+    var newPrice = parseFloat(price);
+    var currentTotalPrice = parseFloat( p_totalText.text() );
+
+    var newTotalPrice = parseFloat(currentTotalPrice + newPrice).toFixed(2);
+    
+    p_totalText.text(newTotalPrice);
+}
+
+/**
+ * Activated selected product variant item on pos sidebar.
+ * @return void
+ */
+function onSideBarProductVariantRowClickActive(){
+    // on productvariant row click active current row
+    $('.productvariant-row').on('click', function(){
+        var currentRow = $(this);
+
+        // remove previous active row and apply corruent
+        $('.productvariant-row').removeClass('productvariant-row-active');
+        currentRow.addClass('productvariant-row-active');
+        // console.log(currentRow.attr('price'));
+    });    
+}
+
+/**
+ * 
+ */
+function changePrVaQtn(numberPadValue){
+    var activeProductVariantItem = $('.productvariant-row-active')[0];
+    
+    // modified total only if row selected (row activated)
+    if(activeProductVariantItem){
+        var itemId = $(activeProductVariantItem).attr('id');
+        var itemPrice = $(activeProductVariantItem).attr('price');
+
+        var currentItemQtn = $('#'+itemId+'-price-text').text();
+        var currentActiveUnitTotalPrice = parseFloat(currentItemQtn*itemPrice).toFixed(2);
+
+        if(numberPadValue != 'Del'){
+            var newItemQtn = parseInt(currentItemQtn + numberPadValue);
+            // get current total price based on current quantity plus new number pad value
+            var currentUnitTotalPrice = parseFloat(itemPrice*newItemQtn);
+            
+            var p_totalText = $('#total-text');
+            var sidebarTotalValue = parseFloat( p_totalText.text() );
+            var oldPvTotal = parseFloat(sidebarTotalValue-currentActiveUnitTotalPrice);
+    
+            var newPvTotal = parseFloat(oldPvTotal + currentUnitTotalPrice).toFixed(2);
+
+        } else {
+            // delete last quantity digit of selected product variant list
+            if(currentItemQtn.length != 1){
+                newItemQtn = currentItemQtn.slice(0,-1);
+            } else {
+                newItemQtn = 0;
+            }
+
+            var p_totalText = $('#total-text');
+            var sidebarTotalValue = parseFloat( p_totalText.text() );
+            var oldPvTotal = parseFloat(sidebarTotalValue-currentActiveUnitTotalPrice);
+
+            var currentUnitTotalPrice = (itemPrice*newItemQtn);
+            var newPvTotal = parseFloat(oldPvTotal + currentUnitTotalPrice).toFixed(2);
+            
+        }
+
+        // change quantity text value
+        $('#'+itemId+'-price-text').text(newItemQtn);
+
+        // set new total price
+        $('#total-text').text(newPvTotal);
+    }
+
+}
