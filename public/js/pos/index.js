@@ -195,7 +195,10 @@ function onSideBarProductVariantRowClickActive(){
 }
 
 /**
- * 
+ * Modified product variants order quantity and total based on 
+ * selected number pad.
+ * @param [String] numberPadValue
+ * @return void
  */
 function changePrVaQtn(numberPadValue){
     var activeProductVariantItem = $('.productvariant-row-active')[0];
@@ -223,8 +226,13 @@ function changePrVaQtn(numberPadValue){
             // delete last quantity digit of selected product variant list
             if(currentItemQtn.length != 1){
                 newItemQtn = currentItemQtn.slice(0,-1);
-            } else {
+            } else if(currentItemQtn.length == 1) {
                 newItemQtn = 0;
+            }
+            
+            // delte row
+            if (currentItemQtn == '0') {
+                activeProductVariantItem.remove();
             }
 
             var p_totalText = $('#total-text');

@@ -308,4 +308,47 @@
 .num-pad-column:hover {
     background-color: rgb(223, 217, 217);
 }
-
+/* payment modal popup */
+/* modal body */
+.payment-modal-body-container {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+}
+/* payment options  */
+.payment-info-wrapper {
+    flex: 0 1 60%;
+    border-right: 2px solid rgb(197, 192, 192);
+}
+/* heading block */
+/* body block */
+.payment-method-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+/* payment order info */
+.payment-order-info-wrapper {
+    flex: 0 1 40%;
+    padding-left: 1em;
+}
+.payment-order-info-total-wrapper,
+.payment-order-info-remain-wrapper,
+.payment-order-info-change-wrapper
+{
+    display: flex;
+    flex-direction: row;
+}
+.payment-order-info-wrapper div p {
+    font-size: 15px;
+}
+/* payment number pad */
+.payment-number-pad-wrapper {
+    margin: 1em auto .5em auto;
+    flex: 0 1 70%;
+}
+/* active payment num pad dot */
+.active-payment-dot {
+    color: white;
+    background-color: rgb(173, 226, 173);
+}
