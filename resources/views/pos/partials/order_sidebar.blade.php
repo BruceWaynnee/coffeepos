@@ -151,6 +151,17 @@
             </div>
             {{-- modal footer where all buttons represent --}}
             <div class="modal-footer">
+                {{-- process to order form --}}
+                <form id="make-order-form" action="{{ route('pos-order') }}" method="POST">
+                    @csrf
+                    <input id="customer" type="hidden" name="customer" value="walk in customer">
+                    <input id="productVariantIdsArr" type="hidden" name="productVariantIdsArr" value="">
+                    <input id="productVariantOrderQtnArr" type="hidden" name="productVariantOrderQtnArr" value="">
+                    <input id="subTotal" type="hidden" name="subTotal" value="">
+                    <input id="totlaPaymentMade" type="hidden" name="totalPaymentMade" value="">
+                    <input id="paymentOption" type="hidden" name="paymentOption" value="">
+                    <input type="submit" class="btn btn-outline-success btn-sm" value="Make Order">
+                </form>
                 <button type="button" class="btn btn-outline-danger btn-sm modalCancelBtn" data-dismiss="modal">Cancel</button>
             </div>
         </div>

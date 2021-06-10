@@ -18,5 +18,10 @@ Route::namespace('Pos')->group(function(){
     // pos router
     Route::get('/', 'PosController@index')->name('pos-home');
 
-    // 
+    // order router
+    Route::post('/order', 'OrderController@store')->name('pos-order');
+    
+    // Receipt router
+    Route::get('/receipt/{orderId}', 'OrderController@showReceipt')->name('order-receipt');
+
 });

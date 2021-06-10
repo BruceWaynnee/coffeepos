@@ -116,17 +116,8 @@
                 });
                 
             });
-
-            $('#payment-btn').on('click', function(){
-                // replace sub total into payment popup
-                var grandTotal = parseFloat( $('#total-text').text() ).toFixed(2);
-                $('#payment-order-info-total-text').text(grandTotal);
-
-                // get selected payment option and add into payment body block
-                choosePaymentOptions();
-
-            });
- 
+            
         });
+
     </script>
 @endsection

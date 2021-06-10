@@ -5,6 +5,19 @@
 function executePosIndexJs(){
     onCategoryClickedShowProducts();
 
+    $('#payment-btn').on('click', function(){
+        // replace sub total into payment popup
+        var grandTotal = parseFloat( $('#total-text').text() ).toFixed(2);
+        $('#payment-order-info-total-text').text(grandTotal);
+        $('#payment-order-info-remain-text').text(grandTotal);
+
+        // get selected payment option and add into payment body block
+        choosePaymentOptions();
+
+        onOrderSubmitValidateDatas();
+
+    });
+
 }
 
 /**
@@ -447,5 +460,76 @@ function calculatePaymentRemainNChange(newMadeTotal, subTotal){
 }
 
 /**
- * 
+ * Validate necessary data before process the order to backend.
+ * @return void;
  */
+function onOrderSubmitValidateDatas(){
+    // check productvariant list, reamning payment total before submit
+    $('#make-order-form').submit(function(){
+
+        if( $.trim( $('#order-product-list-wrapper').html() ).length != 0 ){
+            // ############# Product Variant Block [ Ids, Order Quantities ] #############
+                var tempPvIdsArr = [];
+                var tempPvOrderQtnsArr = [];
+                var continueProcess = true;
+
+                // check product variant and its quantity
+                $('.productvariant-row').each(function(index, object){
+                    var pvId = object.id;
+                    var pvQtn = $('#'+pvId+'-price-text').text();
+                    
+                    if(pvQtn != '0') {
+                        tempPvIdsArr.push(pvId);
+                        tempPvOrderQtnsArr.push(pvQtn);
+                        
+                    } else {
+                        tempPvIdsArr = [];
+                        tempPvOrderQtnsArr = [];
+
+                        alert('Empty Order Quantity Detected, Process Denied!');
+                        $('#payment-modal').modal('hide');
+                        continueProcess = false;
+                        return false;
+                    }
+
+                });
+                // set into hidden
+                $('#productVariantIdsArr').val( JSON.stringify(tempPvIdsArr) );
+                $('#productVariantOrderQtnArr').val( JSON.stringify(tempPvOrderQtnsArr) );
+            
+            if(continueProcess) {
+                // ############# Payment Options Block #############
+                var paymentOption = $('#payment-option-text').text();
+                if ( paymentOption!= '---' ){
+                    $('#paymentOption').val(paymentOption);
+                }else {
+                    alert('Please Choose Paymen Option, Process Denied!');
+                    return false;
+                }
+
+                // ############# SubTotal & Payment Made Block #############
+                var paymentMade   = parseFloat( $('#payment-made-text').text() );
+                var Total         = $('#payment-order-info-total-text').text();
+                var paymentRemain = $('#payment-order-info-remain-text').text();
+
+                if(paymentRemain == 0 ){
+                    $('#subTotal').val( Total );
+                    $('#totlaPaymentMade').val( paymentMade );
+
+                }else {
+                    alert('Customer Payment Pending, Process Denied!');
+                    return false;
+                }
+            
+            } else {
+                return false;
+            }
+
+        }else {
+            alert('Try To Make Order Of Empty ProductVariant, Process Denied!');
+            return false;
+        }
+        
+    });
+    
+}

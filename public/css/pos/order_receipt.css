@@ -1,0 +1,74 @@
+/*###############################
+    Order Receipt Stylesheet 
+#################################*/
+.order-receipt-wrapper {
+    width: 30em;
+    margin: 2em auto 2em auto;
+    display: flex;
+    color: black;
+    padding: 1em 0 1em 0;
+    flex-flow: column wrap;
+    border: 1px solid rgb(221, 218, 218);
+}
+/* receipt header */
+.receipt-header-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+/* logo */
+.header-logo-wrapper { align-self: center; }
+.header-logo-wrapper img {
+    width: 80px;
+    margin-bottom: .5em;
+}
+/* header details */
+.header-detail-wrapper > p {
+    margin-bottom: 0;
+    font-weight: bold;
+    text-align: center;
+}
+.order-header-info { margin-left: 3em; }
+.order-header-info p { 
+    font-size: 12px;
+    margin-bottom: 0; 
+}
+.order-header-info p small {
+    font-size: 13px;
+    font-weight: bold;
+}
+/* receipt body */
+.receipt-body-wrapper {
+    margin-left: 3em;
+}
+/* order productvariant list */
+.pv-order-list-wrapper {
+    display: flex;
+    flex-flow: column wrap;
+}
+.pv-order-list-row {
+    display: flex;
+    flex-direction: row;
+}
+.order-list-header div p { font-weight: bold; }
+.order-list-body div { margin-bottom: -15px; }
+.order-list-body div p {
+    font-size: 12px;
+    margin-bottom: 0;
+}
+/* receipt footer */
+.receipt-footer-wrapper {
+    width: 100%;
+    display: flex;
+    flex-flow: column wrap;
+}
+.waiting-wrapper {
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+}
+.waiting-wrapper p { margin-bottom: 0; }
+.contact-info-wrapper p {
+    font-size: 10px;
+    margin-bottom: 0;
+    text-align: center;
+}
