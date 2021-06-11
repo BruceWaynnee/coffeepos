@@ -93,18 +93,18 @@ Route::namespace('Dashboard')->group(function(){
         Route::delete('{id}', 'InvoiceController@destroy')->name('invoice-delete');        
     });
 
-    // sale router
+    // order router
     Route::group([
-        'prefix' => 'sales',
+        'prefix' => 'orders',
         'middleware' => 'admin',
     ], function(){
-        Route::get('/', 'SaleController@index')->name('sale-list');
-        Route::get('/create', 'SaleController@create')->name('sale-add');
-        Route::get('{id}/detail', 'SaleController@show')->name('sale-detail');
-        Route::get('{id}/edit', 'SaleController@edit');
-        Route::post('/create', 'SaleController@store');
-        Route::patch('{id}/edit', 'SaleController@update')->name('sale-update');
-        Route::delete('{id}', 'SaleController@destroy')->name('sale-delete');        
+        Route::get('/', 'OrderController@index')->name('order-list');
+        Route::get('/create', 'OrderController@create')->name('order-add');
+        Route::get('{id}/detail', 'OrderController@show')->name('order-detail');
+        Route::get('{id}/edit', 'OrderController@edit');
+        Route::post('/create', 'OrderController@store');
+        Route::patch('{id}/edit', 'OrderController@update')->name('order-update');
+        Route::delete('{id}', 'OrderController@destroy')->name('order-delete');        
     });
     
     // currency router [system settings]

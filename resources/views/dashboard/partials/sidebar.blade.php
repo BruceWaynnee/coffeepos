@@ -74,36 +74,18 @@
                                 </ul>
                             </div>
                         </li>
-                        {{-- invoice --}}
+                        {{-- orders --}}
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="javascript:void(0)" data-toggle="collapse" aria-expanded="false"
-                                data-target="#invoice-dropdown" aria-controls="invoice-dropdown">
+                                data-target="#order-dropdown" aria-controls="order-dropdown">
                                 <img class="mr-3" src="{{asset('img/dashboard/icons/sidebar/')}}" alt="">
-                                Invoice
+                                Order
                             </a>
-                            <div id="invoice-dropdown" class="submenu collapse" style="">
+                            <div id="order-dropdown" class="submenu collapse" style="">
                                 <ul class="nav flex-column pl-3">
                                     {{-- history --}}
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">
-                                            History
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        {{-- sales --}}
-                        <li class="nav-item">
-                            <a class="nav-link collapsed" href="javascript:void(0)" data-toggle="collapse" aria-expanded="false"
-                                data-target="#sales-dropdown" aria-controls="sales-dropdown">
-                                <img class="mr-3" src="{{asset('img/dashboard/icons/sidebar/')}}" alt="">
-                                Sales
-                            </a>
-                            <div id="sales-dropdown" class="submenu collapse" style="">
-                                <ul class="nav flex-column pl-3">
-                                    {{-- history --}}
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">
+                                        <a class="nav-link" href="{{ route('order-list') }}">
                                             History
                                         </a>
                                     </li>

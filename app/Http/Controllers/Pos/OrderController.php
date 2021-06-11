@@ -41,8 +41,6 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-
         // get productvariant records
         $productVariants = PosOrder::getProductVariant( json_decode($request['productVariantIdsArr']) );
         if(!$productVariants->data){

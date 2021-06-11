@@ -3,23 +3,29 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\PosOrder;
 use Illuminate\Http\Request;
 
-class SaleController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        // get order records
+        $orders = PosOrder::getPosOrders();
+        if(!$orders->data) {
+            return back()->with('error', $orders->message);
+        }
+        $orders = $orders->data;
+
+        return view('dashboard/modules/order/index', compact('orders'));
     }
 
     /**
      * Show the form for creating a new resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function create()
@@ -29,7 +35,6 @@ class SaleController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -40,18 +45,25 @@ class SaleController extends Controller
 
     /**
      * Display the specified resource.
-     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        // get order record
+        $order = PosOrder::getPosOrder($id);
+        if(!$order->data) {
+            return back()->with('error', $order->message);
+        }
+        $order = $order->data;
+
+        $orderDetails = $order->orderDetails();
+
+        return view( 'dashboard/modules/order/detail', compact('order', 'orderDetails') );    
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -62,7 +74,6 @@ class SaleController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -74,7 +85,6 @@ class SaleController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
