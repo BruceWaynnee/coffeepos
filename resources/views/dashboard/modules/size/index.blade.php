@@ -41,10 +41,13 @@
                     {{-- dropdown items --}}
                     <div class="dropdown-menu dropdown-menu-left">
                         {{-- edit --}}
+                        @can('edit product-size')
                         <div class="action-edit-wrapper">
                             <a class="dropdown-item" href="{{url("dashboard/sizes/$size->id/edit")}}">Edit</a>
                         </div>
+                        @endcan                    
                         {{-- delete --}}
+                        @can('delete product-size')
                         <div class="action-delete-wrapper">
                             <form action="{{ route('size-delete', ['id' => $size->id]) }}" method="POST">
                                 @method('delete')
@@ -54,6 +57,7 @@
                                 </button>
                             </form>
                         </div>
+                        @endcan
                     </div>
                 </td>
             </tr>
@@ -61,11 +65,13 @@
         </tbody>
     </table>
     {{-- create new size --}}
+    @can('create product-size')
     <div class="create-size-link-wrapper">
         <a href="{{ route('size-add') }}" class="btn btn-sm btn-outline-success">
             Add New Size
         </a>
     </div>
+    @endcan
 </div>
 {{-- END:: Size --}}
 @endsection

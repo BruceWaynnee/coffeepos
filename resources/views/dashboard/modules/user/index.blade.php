@@ -49,10 +49,13 @@
                     {{-- dropdown items --}}
                     <div class="dropdown-menu dropdown-menu-left">
                         {{-- edit --}}
+                        @can('edit user')
                         <div class="action-edit-wrapper">
                             <a class="dropdown-item" href="{{url("dashboard/users/$user->id/edit")}}">Edit</a>
                         </div>
+                        @endcan
                         {{-- delete --}}
+                        @can('delete user')
                         <div class="action-delete-wrapper">
                             <form action="{{ route('user-delete', ['id' => $user->id]) }}" method="POST">
                                 @method('delete')
@@ -62,6 +65,7 @@
                                 </button>
                             </form>
                         </div>
+                        @endcan
                     </div>
                 </td>
             </tr>
@@ -69,11 +73,13 @@
         </tbody>
     </table>
     {{-- create new User --}}
+    @can('create user')
     <div class="create-User-link-wrapper">
         <a href="{{ route('user-add') }}" class="btn btn-sm btn-outline-success">
             Create New User
         </a>
     </div>
+    @endcan
 </div>
 {{-- END:: User --}}
 @endsection

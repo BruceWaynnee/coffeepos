@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'c16939dbe7f7b19e62d4215c96720a29e4292028',
+    'reference' => '0dac25d5d470a4c885c62091a393ca0c2af7b7b2',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -384,7 +384,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'c16939dbe7f7b19e62d4215c96720a29e4292028',
+      'reference' => '0dac25d5d470a4c885c62091a393ca0c2af7b7b2',
     ),
     'laravel/tinker' => 
     array (
@@ -808,12 +808,12 @@
     ),
     'sebastian/global-state' => 
     array (
-      'pretty_version' => '5.0.2',
-      'version' => '5.0.2.0',
+      'pretty_version' => '5.0.3',
+      'version' => '5.0.3.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'a90ccbddffa067b51f574dea6eb25d5680839455',
+      'reference' => '23bd5951f7ff26f12d4e3242864df3e08dec4e49',
     ),
     'sebastian/lines-of-code' => 
     array (

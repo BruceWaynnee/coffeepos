@@ -41,10 +41,13 @@
                     {{-- dropdown items --}}
                     <div class="dropdown-menu dropdown-menu-left">
                         {{-- edit --}}
+                        @can('edit product-type')
                         <div class="action-edit-wrapper">
                             <a class="dropdown-item" href="{{url("dashboard/types/$type->id/edit")}}">Edit</a>
                         </div>
+                        @endcan                    
                         {{-- delete --}}
+                        @can('delete product-type')
                         <div class="action-delete-wrapper">
                             <form action="{{ route('type-delete', ['id' => $type->id]) }}" method="POST">
                                 @method('delete')
@@ -54,6 +57,7 @@
                                 </button>
                             </form>
                         </div>
+                        @endcan                    
                     </div>
                 </td>
             </tr>
@@ -61,11 +65,13 @@
         </tbody>
     </table>
     {{-- create new type --}}
+    @can('create product-type')
     <div class="create-type-link-wrapper">
         <a href="{{ route('type-add') }}" class="btn btn-sm btn-outline-success">
             Add New Type
         </a>
     </div>
+    @endcan
 </div>
 {{-- END:: Type --}}
 @endsection

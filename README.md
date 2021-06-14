@@ -61,3 +61,6 @@ Coffee POS System
     ->  composer require spatie/laravel-permission
     ->  php artisan optimize:clear
  - Documentation: https://spatie.be/docs/laravel-permission/v4/installation-laravel
+
+### 
+ - 

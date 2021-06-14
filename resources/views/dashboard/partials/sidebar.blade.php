@@ -19,6 +19,7 @@
                         </li>
                         {{-- available modules --}}
                         {{-- attributes --}}
+                        @if (Gate::check('view product-type') || Gate::check('view product-size'))
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="javascript:void(0)" data-toggle="collapse" aria-expanded="false"
                                 data-target="#attributes-dropdown" aria-controls="attributes-dropdown">
@@ -28,21 +29,27 @@
                             <div id="attributes-dropdown" class="submenu collapse" style="">
                                 <ul class="nav flex-column pl-3">
                                     {{-- type --}}
+                                    @can('view product-type')
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('type-list') }}">
                                             Product Type
                                         </a>
                                     </li>
+                                    @endcan
                                     {{-- size --}}
+                                    @can('view product-size')
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('size-list') }}">
                                             Product Size
                                         </a>
                                     </li>
+                                    @endcan
                                 </ul>
                             </div>
-                        </li>                        
+                        </li>
+                        @endif
                         {{-- product --}}
+                        @if (Gate::check('view product') || Gate::check('view product-product-variant'))
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="javascript:void(0)" data-toggle="collapse" aria-expanded="false"
                                 data-target="#product-dropdown" aria-controls="product-dropdown">
@@ -52,6 +59,7 @@
                             <div id="product-dropdown" class="submenu collapse" style="">
                                 <ul class="nav flex-column pl-3">                                    
                                     {{-- all products --}}
+                                    @can('view product')
                                     <li class="nav-item">
                                         <a class="nav-link collapsed" href="javascript:void(0)" data-toggle="collapse" aria-expanded="false"
                                             data-target="#products-dropdown" aria-controls="products-dropdown">
@@ -67,14 +75,19 @@
                                             </ul>
                                         </div>                 
                                     </li>
+                                    @endcan
                                     {{-- create product --}}
+                                    @can('create product')
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('product-add') }}">Create New Product</a>
                                     </li>
+                                    @endcan
                                 </ul>
                             </div>
                         </li>
+                        @endif
                         {{-- orders --}}
+                        @can('view order')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="javascript:void(0)" data-toggle="collapse" aria-expanded="false"
                                 data-target="#order-dropdown" aria-controls="order-dropdown">
@@ -92,6 +105,7 @@
                                 </ul>
                             </div>
                         </li>
+                        @endcan
                         {{-- settings --}}
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="javascript:void(0)" data-toggle="collapse" aria-expanded="false"
@@ -108,11 +122,13 @@
                                         </a>
                                     </li>
                                     {{-- categories --}}
+                                    @can('view category')
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('category-list') }}">
                                             Category
                                         </a>
                                     </li>
+                                    @endcan
                                     {{-- customer --}}
                                     <li class="nav-item">
                                         <a class="nav-link" href="#">
@@ -125,7 +141,8 @@
                                             Sugar Level
                                         </a>
                                     </li>                                    
-                                    {{-- user, staff --}}
+                                    {{-- user --}}
+                                    @can('view user')
                                     <li class="nav-item">
                                         <a class="nav-link collapsed" href="javascript:void(0)" data-toggle="collapse" aria-expanded="false"
                                             data-target="#system-user-dropdown" aria-controls="system-user-dropdown">
@@ -142,6 +159,7 @@
                                             </ul>
                                         </div>
                                     </li>
+                                    @endcan
                                     {{--  --}}
                                 </ul>
                             </div>

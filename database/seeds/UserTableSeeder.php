@@ -27,7 +27,7 @@ class UserTableSeeder extends Seeder
                 'email_verified_at' => $now,
             ],
 
-            // satya ( manager )
+            // satya
             [
                 'username' => 'satya',
                 'firstname' => 'tann',

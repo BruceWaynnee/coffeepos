@@ -41,10 +41,13 @@
                     {{-- dropdown items --}}
                     <div class="dropdown-menu dropdown-menu-left">
                         {{-- edit --}}
+                        @can('edit category')
                         <div class="action-edit-wrapper">
                             <a class="dropdown-item" href="{{url("dashboard/categories/$category->id/edit")}}">Edit</a>
                         </div>
+                        @endcan
                         {{-- delete --}}
+                        @can('delete category')
                         <div class="action-delete-wrapper">
                             <form action="{{ route('category-delete', ['id' => $category->id]) }}" method="POST">
                                 @method('delete')
@@ -54,6 +57,7 @@
                                 </button>
                             </form>
                         </div>
+                        @endcan
                     </div>
                 </td>
             </tr>
@@ -61,11 +65,13 @@
         </tbody>
     </table>
     {{-- create new category --}}
+    @can('create category')
     <div class="create-category-link-wrapper">
         <a href="{{ route('category-add') }}" class="btn btn-sm btn-outline-success">
             Add New Category
         </a>
     </div>
+    @endcan
 </div>
 {{-- END:: Category --}}
 @endsection

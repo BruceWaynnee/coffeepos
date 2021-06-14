@@ -52,10 +52,13 @@
                     {{-- dropdown items --}}
                     <div class="dropdown-menu dropdown-menu-left">
                         {{-- edit --}}
+                        @can('edit product')
                         <div class="action-edit-wrapper">
                             <a class="dropdown-item" href="{{url("dashboard/products/$product->id/edit")}}">Edit</a>
                         </div>
+                        @endcan
                         {{-- delete --}}
+                        @can('delete product')
                         <div class="action-delete-wrapper">
                             <form action="{{ route('product-delete', ['id' => $product->id]) }}" method="POST">
                                 @method('delete')
@@ -65,10 +68,13 @@
                                 </button>
                             </form>
                         </div>
+                        @endcan
+                        @can('view product-variant')
                         {{-- product variants --}}
                         <div class="action-edit-wrapper">
                             <a class="dropdown-item" href="{{ route('product-productvariants-list', ['productId' => $product->id]) }}">View Variants</a>
-                        </div>                        
+                        </div>
+                        @endcan                    
                     </div>
                 </td>
             </tr>
@@ -79,11 +85,13 @@
         {{ $products->links() }}
     </div>
     {{-- create new product --}}
+    @can('create product')
     <div class="create-product-link-wrapper">
         <a href="{{ route('product-add') }}" class="btn btn-sm btn-outline-success">
             Add New Product
         </a>
     </div>
+    @endcan
 </div>
 {{-- END:: Product --}}
 @endsection
