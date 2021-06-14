@@ -141,8 +141,8 @@
                                             Sugar Level
                                         </a>
                                     </li>                                    
-                                    {{-- user --}}
-                                    @can('view user')
+                                    {{-- user, role--}}
+                                    @if (Gate::check('view user') || Gate::check('view role'))
                                     <li class="nav-item">
                                         <a class="nav-link collapsed" href="javascript:void(0)" data-toggle="collapse" aria-expanded="false"
                                             data-target="#system-user-dropdown" aria-controls="system-user-dropdown">
@@ -150,16 +150,26 @@
                                         </a>
                                         <div id="system-user-dropdown" class="submenu collapse" style="">
                                             <ul class="nav flex-column pl-3">
+                                                {{-- role list --}}
+                                                @can('view role')
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="{{ route('role-list') }}">
+                                                        Role
+                                                    </a>
+                                                </li>
+                                                @endcan
+                                                @can('view user')
                                                 {{-- user list --}}
                                                 <li class="nav-item">
                                                     <a class="nav-link" href="{{ route('user-list') }}">
                                                         User
                                                     </a>
                                                 </li>
+                                                @endcan
                                             </ul>
                                         </div>
                                     </li>
-                                    @endcan
+                                    @endif
                                     {{--  --}}
                                 </ul>
                             </div>

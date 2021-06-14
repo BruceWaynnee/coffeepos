@@ -72,6 +72,13 @@ class PermissionTableSeeder extends Seeder
                 Permission::create(['name' => 'delete user']);
             // User Permissions Seeder [END]
 
+            // Role Permissions Seeder [BEGIN]
+                Permission::create(['name' => 'view role']);
+                Permission::create(['name' => 'create role']);
+                Permission::create(['name' => 'edit role']);
+                Permission::create(['name' => 'delete role']);
+            // Role Permissions Seeder [END]
+
             // // Permissions Seeder [BEGIN]
             //     Permission::create(['name' => 'view ']);
             //     Permission::create(['name' => 'create ']);

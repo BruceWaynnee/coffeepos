@@ -182,6 +182,19 @@ Route::middleware('auth')->namespace('Dashboard')->group(function(){
             Route::delete('{id}', 'UserController@destroy')->name('user-delete')->middleware('permission:delete user');
         });
 
+    // role router [system settings / system users]
+    Route::group([
+        'prefix' => 'roles',
+    ], function(){
+        Route::get('/', 'RoleController@index')->name('role-list')->middleware('permission:view role');
+        Route::get('/create', 'RoleController@create')->name('role-add')->middleware('permission:create role');
+        Route::get('{id}/detail', 'RoleController@show')->name('role-detail')->middleware('permission:view role|create role|edit role');
+        Route::get('{id}/edit', 'RoleController@edit')->middleware('permission:edit role');
+        Route::post('/create', 'RoleController@store')->middleware('permission:create role');
+        Route::patch('{id}/edit', 'RoleController@update')->name('role-update')->middleware('permission:edit role');
+        Route::delete('{id}', 'RoleController@destroy')->name('role-delete')->middleware('permission:delete role');
+    });
+
 });
 
 ?>
