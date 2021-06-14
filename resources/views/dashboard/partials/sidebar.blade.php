@@ -135,17 +135,10 @@
                                             <ul class="nav flex-column pl-3">
                                                 {{-- user list --}}
                                                 <li class="nav-item">
-                                                    <a class="nav-link" href="#">
+                                                    <a class="nav-link" href="{{ route('user-list') }}">
                                                         User
                                                     </a>
                                                 </li>
-                                                {{-- staff list --}}
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="#">
-                                                        Staff
-                                                    </a>
-                                                </li>
-                                                {{--  --}}
                                             </ul>
                                         </div>
                                     </li>

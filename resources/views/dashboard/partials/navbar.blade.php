@@ -61,23 +61,19 @@
                 {{-- current login user block --}}
                 <li class="nav-item d-flex">
                     <div class="my-auto px-3">
-                        {{-- <img style="width: 20px; vertical-align: text-bottom;"
-                            src="{{ asset('storage/' . Auth::user()->staff->avatar) }}" alt="user icon"
-                            onerror="this.src='{{ asset('icon/dashboard/invalid_img.png') }}';"> --}}
-                        <img style="width: 16px; vertical-align: text-bottom;"
-                        src="{{ asset('icon/account.png') }}" alt="user icon">
-                        <span class="text-gray" style="font-size: 16px;">{{ Auth::user()->name }}</span>
+                        {{-- <img style="width: 16px; vertical-align: text-bottom;" src="{{ asset('icon/account.png') }}" alt="user icon"> --}}
+                        <span class="text-gray" style="font-size: 16px;">{{ Auth::user()->username }}</span>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('logout') }}" class="nav-link" style="color:#515151;" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                        {{ __('Logout') }}
-                    </a>
+                    <!-- Authentication -->
+                    <form id='logout-form' method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" > 
+                            {{ __('Logout') }} 
+                        </button>
+                    </form>
                 </li>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
                 @endauth
             </ul>
         </div>

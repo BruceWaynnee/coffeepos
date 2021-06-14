@@ -2,7 +2,9 @@
 
 namespace App;
 
+use Exception;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -11,12 +13,29 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
+     * Table name.
+     * @var string
+     */
+    protected $table = 'users';
+
+    /**
+     * Primary key.
+     * @var string
+     */
+    protected $primaryKey = 'id';
+
+    /**
      * The attributes that are mass assignable.
-     *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'username', 
+        'firstname', 
+        'lastname', 
+        'email', 
+        'password',
+        'email_verified_at',
+
     ];
 
     /**
@@ -36,4 +55,58 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * ########################
+     *     Helper Functions
+     * ########################
+     */
+
+    // User Helper Functions [BEGIN]
+        /**
+         * Get all user records from database.
+         * @return RespondObject [ data: result_data, message: result_message ] 
+         */
+        public static function getUsers(){
+            $respond = (object)[];
+            
+            try {
+                $users = User::all();
+                $respond->data    = $users;
+                $respond->message = 'User records found';
+            } catch(Exception $e) {
+                $respond->data = false;
+                $respond->message = 'Problem occured while trying to get user records!';
+            }
+
+            return $respond;
+        }
+
+        /**
+         * Get specific user record based on giving id from database.
+         * @param Integer $id
+         * @return RespondObject [ data: result_data, message: result_message ] 
+         */
+        public static function getUser($id){
+            $respond = (object)[];
+            
+            try {
+                $user = User::findOrFail($id);
+                $respond->data    = $user;
+                $respond->message = 'User record found';
+            } catch(ModelNotFoundException $e) {
+                $respond->data = false;
+                $respond->message = 'User record not found!';
+            }
+
+            return $respond;
+        }
+    // User Helper Functions [END]
+
+    /**
+     * ########################
+     *      Relationship
+     * ########################
+     */
+
 }

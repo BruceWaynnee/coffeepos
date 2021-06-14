@@ -33,20 +33,20 @@ Coffee POS System
   
 
 ### Logins
-| Logins  		| Super Admin 									           |
+| Logins  		| Super Admin 									                     |
 | -------------|----------------------------------------------------------:|
-| Logins  		| Admin 									               |
+| Logins  		| Admin 									                           |
 | -------------|----------------------------------------------------------:|
-| username     | `admin` 					                               |
-| email        | `admin@gmail.com`                                         |
-| password 	   | `admin123`                            			           |
+| username     | `admin` 					                                    |
+| email        | `admin@coffee.com`                                        |
+| password 	   | `admin123`                            			            |
 | permission   | `all permissions`                                         |
 |              |                                                           |
-| Logins  	   | Sales Manager 									           |
+| Logins  	   | Sales Manager 									                  |
 | -------------|----------------------------------------------------------:|
-| username     | `jack` 					                               |
-| email        | `jack@gmail.com`                                          |
-| password 	   | `jack123`                              			       |
+| username     | `satya` 					                                    |
+| email        | `satya@coffee.com`                                        |
+| password 	   | `satya123`                              			         |
 | permission   | `limite permissions`                                      |
 |              |                                                           |
 

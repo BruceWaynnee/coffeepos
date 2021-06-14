@@ -3,6 +3,22 @@
 use Illuminate\Support\Facades\Route;
 
 /*
+ | #####################
+ |    Authentication
+ | #####################
+ |
+ | Here is where you register all dashboard authentication routers.
+ | 
+ */
+Route::namespace('Auth')->group(function(){
+    Route::get('/login', 'LoginController@showDashboardLogin')->name('dashboard-login');
+    
+    Route::post('/login', 'LoginController@dashboardLogin')->middleware('guest')->name('login');
+
+    Route::post('/logout', 'LoginController@destroy')->middleware('auth')->name('logout');
+});
+
+/*
 |--------------------------------------------------------------------------
 | Dashboard Routes
 |--------------------------------------------------------------------------
@@ -14,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Dashboard
-Route::namespace('Dashboard')->group(function(){
+Route::middleware('auth')->namespace('Dashboard')->group(function(){
 
     // dashboard router
     Route::get('/', 'DashboardController@index')->name('dashboard-home');
@@ -22,7 +38,6 @@ Route::namespace('Dashboard')->group(function(){
     // product router
     Route::group([
         'prefix' => 'products',
-        'middleware' => 'admin',
     ], function(){
         Route::get('/', 'ProductController@index')->name('product-list');
         Route::get('/create', 'ProductController@create')->name('product-add');
@@ -38,7 +53,6 @@ Route::namespace('Dashboard')->group(function(){
     // product variant router
     Route::group([
         'prefix' => 'productvariants',
-        'middleware' => 'admin',
     ], function(){
         Route::get('/', 'ProductVariantController@index')->name('productvariant-list');
         Route::get('{productId}/create', 'ProductVariantController@create')->name('productvariant-add');
@@ -54,7 +68,6 @@ Route::namespace('Dashboard')->group(function(){
     // type [attributes]
     Route::group([
         'prefix' => 'types',
-        'middleware' => 'admin',
     ], function(){
         Route::get('/', 'TypeController@index')->name('type-list');
         Route::get('/create', 'TypeController@create')->name('type-add');
@@ -68,7 +81,6 @@ Route::namespace('Dashboard')->group(function(){
     // size [attributes]
     Route::group([
         'prefix' => 'sizes',
-        'middleware' => 'admin',
     ], function(){
         Route::get('/', 'SizeController@index')->name('size-list');
         Route::get('/create', 'SizeController@create')->name('size-add');
@@ -82,7 +94,6 @@ Route::namespace('Dashboard')->group(function(){
     // invoice router
     Route::group([
         'prefix' => 'invoices',
-        'middleware' => 'admin',
     ], function(){
         Route::get('/', 'InvoiceController@index')->name('invoice-list');
         Route::get('/create', 'InvoiceController@create')->name('invoice-add');
@@ -96,7 +107,6 @@ Route::namespace('Dashboard')->group(function(){
     // order router
     Route::group([
         'prefix' => 'orders',
-        'middleware' => 'admin',
     ], function(){
         Route::get('/', 'OrderController@index')->name('order-list');
         Route::get('/create', 'OrderController@create')->name('order-add');
@@ -110,7 +120,6 @@ Route::namespace('Dashboard')->group(function(){
     // currency router [system settings]
     Route::group([
         'prefix' => 'currencies',
-        'middleware' => 'admin',
     ], function(){
         Route::get('/', 'CurrencyController@index')->name('currency-list');
         Route::get('/create', 'CurrencyController@create')->name('currency-add');
@@ -124,7 +133,6 @@ Route::namespace('Dashboard')->group(function(){
     // sugar-level router [system settings]
     Route::group([
         'prefix' => 'sugarlevels',
-        'middleware' => 'admin',
     ], function(){
         Route::get('/', 'SugarLevelController@index')->name('sugar-level-list');
         Route::get('/create', 'SugarLevelController@create')->name('sugar-level-add');
@@ -138,7 +146,6 @@ Route::namespace('Dashboard')->group(function(){
     // category router [system settings]
     Route::group([
         'prefix' => 'categories',
-        'middleware' => 'admin',
     ], function(){
         Route::get('/', 'CategoryController@index')->name('category-list');
         Route::get('/create', 'CategoryController@create')->name('category-add');
@@ -152,7 +159,6 @@ Route::namespace('Dashboard')->group(function(){
     // customer router [system settings]
     Route::group([
         'prefix' => 'customers',
-        'middleware' => 'admin',
     ], function(){
         Route::get('/', 'CustomerController@index')->name('customer-list');
         Route::get('/create', 'CustomerController@create')->name('customer-add');
@@ -166,7 +172,6 @@ Route::namespace('Dashboard')->group(function(){
     // user router [system settings / system users]
     Route::group([
         'prefix' => 'users',
-        'middleware' => 'admin',
     ], function(){
         Route::get('/', 'UserController@index')->name('user-list');
         Route::get('/create', 'UserController@create')->name('user-add');
@@ -175,20 +180,6 @@ Route::namespace('Dashboard')->group(function(){
         Route::post('/create', 'UserController@store');
         Route::patch('{id}/edit', 'UserController@update')->name('user-update');
         Route::delete('{id}', 'UserController@destroy')->name('user-delete');        
-    });
-
-    // staff router [system settings / system users]
-    Route::group([
-        'prefix' => 'staffs',
-        'middleware' => 'admin',
-    ], function(){
-        Route::get('/', 'StaffController@index')->name('staff-list');
-        Route::get('/create', 'StaffController@create')->name('staff-add');
-        Route::get('{id}/detail', 'StaffController@show')->name('staff-detail');
-        Route::get('{id}/edit', 'StaffController@edit');
-        Route::post('/create', 'StaffController@store');
-        Route::patch('{id}/edit', 'StaffController@update')->name('staff-update');
-        Route::delete('{id}', 'StaffController@destroy')->name('staff-delete');        
     });
 
 });
