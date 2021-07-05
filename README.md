@@ -29,7 +29,8 @@ Coffee POS System
 
 -  ```mklink /D "public\storage" "..\storage\app\public"```
 
-- Done. Go to domain/dashboard to see admin dashboard.
+- Done. Go to domain to see coffe pos.
+- Go to domain/dashboard to see admin dashboard.
   
 
 ### Logins
