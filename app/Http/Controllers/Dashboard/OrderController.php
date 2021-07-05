@@ -57,7 +57,7 @@ class OrderController extends Controller
         }
         $order = $order->data;
 
-        $orderDetails = $order->orderDetails();
+        $orderDetails = $order->orderDetails;
 
         return view( 'dashboard/modules/order/detail', compact('order', 'orderDetails') );    
     }
