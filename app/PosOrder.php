@@ -140,7 +140,17 @@ class PosOrder extends Model
     }
 
     /**
+     * Many orders to one income archive.
+     * @return App/IncomeArchive/
+     */
+    public function incomeArchive(){
+        return $this->belongsTo(
+            IncomeArchive::class,
+            'income_archive_id',
+        );
+    }
+
+    /**
      * 
      */
-
 }
