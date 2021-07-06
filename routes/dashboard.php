@@ -116,6 +116,15 @@ Route::middleware('auth')->middleware('permission:access dashboard')->namespace(
             Route::patch('{id}/edit', 'OrderController@update')->name('order-update');
             Route::delete('{id}', 'OrderController@destroy')->name('order-delete')->middleware('permission:delete order');
         });
+
+    // income archive router
+    Route::group([
+        'prefix' => 'incomearchives',
+    ], function(){
+        Route::get('/', 'IncomeArchiveController@index')->name('income-archive-list')->middleware('permission:view income-archive');
+        Route::get('{id}/detail', 'IncomeArchiveController@show')->name('income-archive-detail')->middleware('permission:view income-archive');
+        Route::delete('{id}', 'IncomeArchiveController@destroy')->name('income-archive-delete')->middleware('permission:delete income-archive');
+    });
     
     // currency router [system settings]
         Route::group([

@@ -2,9 +2,11 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class IncomeArchive extends Model
 {
@@ -24,7 +26,7 @@ class IncomeArchive extends Model
      * The attributes that are mass assignable.
      * @var Array
      */
-    protected $fillAble = [
+    protected $fillable = [
         'staff',
         'end_date',
         'start_date',
@@ -81,6 +83,60 @@ class IncomeArchive extends Model
 
             return $respond;
         }
+
+        /**
+         * Store income archive id into server side session.
+         * @param Integer $id
+         * @return Void
+         */
+        public static function createIncomeArciveSession($id){
+            $session = new Session();
+            $currentTimestamp = Carbon::now();
+            $sessionName = 'incomeArchiveId';
+
+            // check empty sessions
+            if($session->has($sessionName)) {
+                // close old session
+                $oldIncomeArchiveId = $session->get($sessionName);
+                $incomeArchive = IncomeArchive::getIncomeArchive($oldIncomeArchiveId);
+                if($incomeArchive->data){
+                    $incomeArchive->data->end_date = $currentTimestamp;
+                }
+
+                $session->clear();
+            }
+
+            $session->set($sessionName, $id);
+        }
+
+        /**
+         * Get income archive id from server side sessions.
+         * @return RespondObject [ data: result_data, message:result_message ]
+         */
+        public static function getIncomeArchiveSession(){
+            $respond = (object)[];
+            $session = new Session();
+            $sessionName = 'incomeArchiveId';
+
+            if($session->has($sessionName)){
+                $respond->data = $session->get($sessionName);
+                $respond->message = 'Income archive id session found';
+            } else {
+                $respond->data = false;
+                $respond->message = 'Income archive id session not found!';
+            }
+            return $respond;
+        }
+
+        /**
+         * Clear income archive id from server side sessions.
+         * @return Void
+         */
+        public static function clearIncomeArchiveSession(){
+            $session = new Session();
+            $session->clear();
+        }
+
     // Income Archive Helper Functions [END]
     
     // Order Helper Functions [BEGIN]
@@ -118,6 +174,26 @@ class IncomeArchive extends Model
             } catch(ModelNotFoundException $ex) {
                 $respond->data    = false;
                 $respond->message = 'order record not found!';
+            }
+
+            return $respond;
+        }
+
+        /**
+         * Get grand total revenue, net incom and total expense
+         * from collection of orders.
+         * @return RespondObject [ totalRevenue, totalExpense, totalNetIncome]
+         */
+        public static function getTotalOrderRevenueExpenseNetIncome($orderCollection){
+            $respond = (object)[];
+            $respond->totalRevenue = 0;
+            $respond->totalExpense = 0;
+            $respond->totalNetIncome = 0;
+
+            foreach($orderCollection as $order){
+                $respond->totalRevenue   += (double)$order->payment_receive;
+                $respond->totalExpense   += (double)$order->payment_return;
+                $respond->totalNetIncome += (double)$order->grand_total;
             }
 
             return $respond;

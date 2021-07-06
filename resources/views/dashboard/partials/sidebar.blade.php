@@ -106,6 +106,26 @@
                             </div>
                         </li>
                         @endcan
+                        {{-- income archives --}}
+                        @can('view income-archive')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="javascript:void(0)" data-toggle="collapse" aria-expanded="false"
+                                data-target="#income-archive-dropdown" aria-controls="income-archive-dropdown">
+                                <img class="mr-3" src="{{asset('img/dashboard/icons/sidebar/')}}" alt="">
+                                Income Archive
+                            </a>
+                            <div id="income-archive-dropdown" class="submenu collapse" style="">
+                                <ul class="nav flex-column pl-3">
+                                    {{-- history --}}
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('income-archive-list') }}">
+                                            History
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        @endcan
                         {{-- settings --}}
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="javascript:void(0)" data-toggle="collapse" aria-expanded="false"

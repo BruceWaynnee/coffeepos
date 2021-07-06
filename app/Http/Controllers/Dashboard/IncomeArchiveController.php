@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\IncomeArchive;
 use Illuminate\Http\Request;
 
 class IncomeArchiveController extends Controller
@@ -14,7 +15,13 @@ class IncomeArchiveController extends Controller
      */
     public function index()
     {
-        //
+        // get income archive records
+        $incomeArchives = IncomeArchive::getIncomeArchives();
+        if(!$incomeArchives->data){
+            return back()->with('error', $incomeArchives->message);
+        }
+        $incomeArchives = $incomeArchives->data;
+        return view( 'dashboard/modules/income_archive/index', compact('incomeArchives') );
     }
 
     /**
