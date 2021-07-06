@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Pos;
 use App\PosOrder;
 use App\PosOrderDetail;
 use App\Http\Controllers\Controller;
-
+use App\IncomeArchive;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -41,6 +42,13 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        // get income archive id from session
+        $incomeArchiveId = IncomeArchive::getIncomeArchiveSession();
+        if(!$incomeArchiveId->data){
+            return back()->with('error', $incomeArchiveId->message .', unable to process order!');
+        }
+        $incomeArchiveId = $incomeArchiveId->data;
+
         // get productvariant records
         $productVariants = PosOrder::getProductVariant( json_decode($request['productVariantIdsArr']) );
         if(!$productVariants->data){
@@ -52,6 +60,8 @@ class OrderController extends Controller
         try {
             DB::beginTransaction();
 
+            $currentUser = Auth::user();
+
             $grandTotal     = number_format( (float)$request['subTotal'], 2, '.', '' );
             $paymentReceive = number_format( (float)$request['totalPaymentMade'], 2, '.', '' );
             $paymentReturn  = ($paymentReceive - $grandTotal);
@@ -60,7 +70,9 @@ class OrderController extends Controller
                 'grand_total'       => $grandTotal,
                 'payment_receive'   => $paymentReceive,
                 'payment_return'    => $paymentReturn,
-                'customer'          => strtolower($request['customer']),
+                'customer'          => 'walk in customer',
+                'cashier'           => $currentUser->username,
+                'income_archive_id' => $incomeArchiveId,
             ]);
 
             $posOrder->save();

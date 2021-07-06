@@ -62,6 +62,13 @@ class PermissionTableSeeder extends Seeder
                 Permission::create(['name' => 'delete order']);
             // Order Permissions Seeder [END]
 
+            // Income Archive Permissions Seeder [BEGIN]
+                Permission::create(['name' => 'view income-archive']);
+                Permission::create(['name' => 'create income-archive']);
+                Permission::create(['name' => 'edit income-archive']);
+                Permission::create(['name' => 'delete income-archive']);
+            // Income Archive Permissions Seeder [END]
+
             // Category Permissions Seeder [BEGIN]
                 Permission::create(['name' => 'view category']);
                 Permission::create(['name' => 'create category']);
