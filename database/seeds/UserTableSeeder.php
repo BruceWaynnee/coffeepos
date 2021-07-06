@@ -37,6 +37,16 @@ class UserTableSeeder extends Seeder
                 'email_verified_at' => $now,
             ],
 
+            // staff
+            [
+                'username' => 'staff',
+                'firstname' => 'staff',
+                'lastname' => 'staff',
+                'email' => 'staff@coffee.com',
+                'password' => Hash::make('staff123'),
+                'email_verified_at' => $now,
+            ],            
+
             // 
 
         ];

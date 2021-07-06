@@ -14,11 +14,16 @@
     <div class="system-options-wrapper">
         {{-- user --}}
         <div class="system-user-wrapper">
-            <p>Tann VerakSatya</p>
+            <span>{{ ucwords( Auth::user()->username ) }}</span>
         </div>
         {{-- system close btn --}}
         <div class="system-close-btn-wrapper">
-            <p>close</p>
+            <form id='logout-form' method="POST" action="{{ route('close-pos') }}">
+                @csrf
+                <button class="nav-link btn btn-sm btn-outline-danger mr-3" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" > 
+                    {{ __('Close System') }} 
+                </button>
+            </form>
         </div>
     </div>
 </div>
