@@ -8,8 +8,8 @@
     {{-- CSRF TOKEN --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    {{-- tittle --}}
-    <title>Black & White Dashboard Login</title>
+    {{-- title --}}
+    <title>Black & White System Open</title>
 
     {{-- bootstrap css --}}
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
@@ -37,11 +37,12 @@
         #login .container #login-row #login-column #login-box #login-form #register-link {
             margin-top: -85px;
         }
+
     </style>
 
 </head>
 <body>
-{{-- BEGIN:: Dashboard Login --}}
+{{-- BEGIN:: Pos Login --}}
     <div id="login">
         <div class="container">
             <div id="login-row" class="row justify-content-center align-items-center">
@@ -55,22 +56,23 @@
                     @endif
                     <div id="login-box" class="col-md-12">      
                         {{-- login form wrapper --}}
-                        <form id="login-form" class="form" action="{{ route('login') }}" method="POST">
+                        <form id="login-form" class="form" action="{{ route('open-pos') }}" method="POST">
                             @csrf
                             <div class="text-center">
                                 <img style="width: 100px" src="{{asset('img/dashboard/logo/coffee_logo.png')}}" alt="black white icon">
+                                <p><u><i>POS</i> System</u></p>
                             </div>
                             <div class="form-group">
-                                <label for="email">Email:</label><br>
-                                <input type="email" name="email" id="email" class="form-control" required>
+                                <label for="username">Username:</label><br>
+                                <input type="text" name="username" id="username" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="password">Password:</label><br>
                                 <input type="password" name="password" id="password" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label for="remember-me"><span>Remember me</span> <span><input id="remember" name="remember" type="checkbox"></span></label><br>
-                                <input type="submit" name="submit" class="btn btn-outline-success btn-md" value="Login">
+                                {{-- <label for="remember-me"><span>Remember me</span> <span><input id="remember" name="remember" type="checkbox"></span></label><br> --}}
+                                <input type="submit" name="submit" class="btn btn-outline-success btn-md" value="Open System">
                             </div>
                         </form>
                     </div>
@@ -78,14 +80,8 @@
             </div>
         </div>
     </div>
-{{-- END:: Dashboard Login --}}
-</body>
+{{-- END:: Pos Login --}}
 
-    {{-- jquery script --}}
-    {{-- <script src="{{asset('js/jquery.min.js')}}"></script> --}}
-    {{-- bootstrap script --}}
-    {{-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> --}}
-    {{-- bootstrap another script (try to delete this late after the test)--}} 
-    {{-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script> --}}
+</body>
 
 </html>

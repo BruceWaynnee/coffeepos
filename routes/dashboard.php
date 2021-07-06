@@ -30,7 +30,7 @@ Route::namespace('Auth')->group(function(){
 */
 
 // Dashboard
-Route::middleware('auth')->namespace('Dashboard')->group(function(){
+Route::middleware('auth')->middleware('permission:access dashboard')->namespace('Dashboard')->group(function(){
 
     // dashboard router
     Route::get('/', 'DashboardController@index')->name('dashboard-home');

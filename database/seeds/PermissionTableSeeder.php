@@ -23,6 +23,10 @@ class PermissionTableSeeder extends Seeder
          * ========================================
          */
 
+            // Access Dashboard Permissions Seeder [BEGIN]
+                Permission::create(['name' => 'access dashboard']);
+            // Access Dashboard Permissions Seeder [END]
+
             // Product Type Permissions Seeder [BEGIN]
                 Permission::create(['name' => 'view product-type']);
                 Permission::create(['name' => 'create product-type']);
@@ -79,6 +83,13 @@ class PermissionTableSeeder extends Seeder
                 Permission::create(['name' => 'delete role']);
             // Role Permissions Seeder [END]
 
+            // Staff ( POS View ) Permissions Seeder [BEGIN]
+                Permission::create(['name' => 'view pos']);
+                Permission::create(['name' => 'create pos']);
+                Permission::create(['name' => 'edit pos']);
+                Permission::create(['name' => 'delete pos']);
+            // Staff ( POS View ) Permissions Seeder [END]
+
             // // Permissions Seeder [BEGIN]
             //     Permission::create(['name' => 'view ']);
             //     Permission::create(['name' => 'create ']);
@@ -104,6 +115,8 @@ class PermissionTableSeeder extends Seeder
             //  Give Permission to [ General Manager Role ] [BEGIN]
                 // give permissions to role
                 $generalManagerRole = Role::where('name', 'general manager')->get()->first();
+                // dashboard accessing
+                $generalManagerRole->givePermissionTo('access dashboard');
                 // product type permissions
                 $generalManagerRole->givePermissionTo('view product-type');
                 $generalManagerRole->givePermissionTo('create product-type');
@@ -126,6 +139,21 @@ class PermissionTableSeeder extends Seeder
                 $satyaUser->assignRole('general manager');
             //  Give Permission to [ General Manager Role ] [END]
 
+            //  Give Permission to [ Staff Role ] [Begin]
+                // give permissions to role
+                $staffRole = Role::where('name', 'staff')->get()->first();
+                
+                // pos view permissions
+                $staffRole->givePermissionTo('view pos');
+                $staffRole->givePermissionTo('create pos');
+                $staffRole->givePermissionTo('edit pos');
+                $staffRole->givePermissionTo('delete pos');
+
+                // assign role to user
+                $staffUser = User::Where('username', 'staff')->get()->first();
+                $staffUser->assignRole('staff');
+            //  Give Permission to [ Staff Role ] [END]
+            
             //  Give Permission to [ Role ] [Begin]
                 // give permissions to role
 

@@ -8,7 +8,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class LoginController extends Controller
+class PosLoginController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -22,58 +22,53 @@ class LoginController extends Controller
     */
 
     /**
-     * Where to redirect users after login.
-     *
-     * @var string
+     * Where to redirect user after login
+     * 
+     * @var String
      */
-    protected $redirectTo = RouteServiceProvider::Dashboard;
+    protected $redirectTo = RouteServiceProvider::PosView;
 
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-
-    /**
-     * Show dashboard login
+     * Show pos view login
      * @return \Illuminate\Http\Response
      */
-    public function showDashboardLogin()
-    {
-        return view('dashboard.auth.login');
+    public function showPosLogin(){
+        return view('pos/auth/open');
     }
 
     /**
      * Handle an incoming authentication request.
-     *
+     *  
      * @param  \App\Http\Requests\Auth\LoginRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function dashboardLogin(Request $request)
+    public function posLogin(Request $request)
     {
+        // dd($request->all());
+
         $request->validate([
-            'email'    => 'required|string|email',
+            'username' => 'required|string',
             'password' => 'required|string',
         ]);
 
-        $userCredentials = $request->only('email', 'password');
+        $userCredentials = $request->only('username', 'password');
 
         // check user using auth function
         if (Auth::attempt($userCredentials)) {
-            return redirect()->intended(RouteServiceProvider::Dashboard);
+            return redirect()->intended(RouteServiceProvider::PosView);
         }
         else {
             return back()->with('error', 'Whoops! invalid email or password.');
         }
     }
 
-    /**
+        /**
      * Destroy an authenticated session.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Request $request)
+    public function posDestroy(Request $request)
     {
         Auth::guard('web')->logout();
 
@@ -81,7 +76,7 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('dashboard-login');
+        return redirect()->route('pos-login');
     }
 
 }

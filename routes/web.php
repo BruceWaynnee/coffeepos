@@ -3,6 +3,22 @@
 use Illuminate\Support\Facades\Route;
 
 /*
+ | #####################
+ |    Authentication
+ | #####################
+ |
+ | Here is where you register all dashboard authentication routers.
+ | 
+ */
+Route::namespace('Auth')->group(function(){
+    Route::get('/systemopen', 'PosLoginController@showPosLogin')->name('pos-login');
+
+    Route::post('/systemlogin', 'PosLoginController@posLogin')->middleware('guest')->name('open-pos');
+
+    Route::post('/systemlogout', 'PosLoginController@posDestroy')->middleware('auth')->name('close-pos');
+});
+
+/*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
@@ -14,8 +30,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::namespace('Pos')->group(function(){
-    // pos router
+Route::middleware('pos_auth')->namespace('Pos')->group(function(){
+    // pos router    
     Route::get('/', 'PosController@index')->name('pos-home');
 
     // order router
