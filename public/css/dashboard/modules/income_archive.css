@@ -1,0 +1,94 @@
+/* ==========================================
+    Dashboard Income Archives StyleSheet 
+============================================= */
+
+/* ########### Index Page ########### */
+/* breadcrumb heading input */
+.breadcrumb-search-box {
+    padding: .5em 2em .5em 2em;
+    outline: unset;
+    font-size: 12px;
+    border-radius: 5px;
+    border: .5px solid rgba(161, 160, 160, 0.494);
+}
+
+/* income archive table */
+.income-archive-table-listing-wrapper thead{
+    background-color: #EFEFEF;
+}
+.income-archive-table-listing-wrapper thead tr th {
+    color: rgb(54, 54, 54);
+    font-size: 13px;
+}
+.income-archive-table-listing-wrapper tbody{
+    border-bottom: .5px solid rgba(190, 187, 187, 0.494);
+}
+.table td, 
+.table th {
+    vertical-align: middle;
+}
+
+/* ########### Detail Page ########### */
+.income-archive-detail-wrapper {
+    width: 80%;
+    padding: 1em 2em 1em 2em;
+    margin: auto;
+    display: flex;
+    flex-flow: column wrap;
+    border: 1px solid gray;
+}
+/* custom detail row */
+.custom-detail-row {
+    display: flex;
+    flex-flow: row wrap;
+}
+/* custom detail column */
+.custom-detail-column p {
+    margin-bottom: .3em;
+}
+.custom-font-weight { font-weight: bolder; }
+/* header block */
+.detail-header-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+.detail-header-wrapper h3 { 
+    font-size: 21px;
+    text-align: center;
+}
+/* body block */
+.detail-body-wrapper {
+    display: flex;
+    margin-top: 2rem;
+    flex-direction: column;
+}
+/* detail icon */
+.detail-icon-wrapper {
+    display: flex;
+    overflow: hidden;
+    max-width: 100px;
+    max-height: 100px;
+}
+.detail-icon-wrapper img {
+    width: 100%;
+}
+.custom-detail-small-tage-font-size {
+    font-size: 16px;
+    color: rgb(133, 212, 14);
+    font-weight: normal;
+}
+/* footer block */
+.detail-footer-wrapper {
+    display: flex;
+    margin-top: 2rem;
+    flex-flow: column wrap;
+}
+
+/* ########### Media Query ########### */
+/* ----- desktop ----- */
+
+
+/* ----- tablet ----- */
+
+
+/* ----- mobile ----- */
