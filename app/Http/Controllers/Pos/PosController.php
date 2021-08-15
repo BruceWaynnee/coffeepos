@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pos;
 
 use App\Category;
+use App\Customer;
 use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\Request;
@@ -29,7 +30,14 @@ class PosController extends Controller
         }
         $products = $products->data;
 
-        return view( 'pos/index', compact('categories', 'products') );
+        // get all customer records
+        $customers = Customer::getCustomers();
+        if(!$customers->data){
+            return view('pos/index')->with('error', $customers->message);
+        }
+        $customers = $customers->data;
+
+        return view( 'pos/index', compact('categories', 'products', 'customers') );
     }
 
     /**

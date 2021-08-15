@@ -5,16 +5,37 @@
 function executePosIndexJs(){
     onCategoryClickedShowProducts();
 
+    onPopupCustomerListClickedConfirmCustomer();
+
     $('#payment-btn').on('click', function(){
-        // replace sub total into payment popup
-        var grandTotal = parseFloat( $('#total-text').text() ).toFixed(2);
-        $('#payment-order-info-total-text').text(grandTotal);
-        $('#payment-order-info-remain-text').text(grandTotal);
+        var currentCustomer = $('#customer-sidebar-text').text();
+        var customerDiscount = ( $('#customer-sidebar-text').attr('customerDiscount') ).split('%', 1)[0];
+        
+        if(currentCustomer != 'Choose Customer'){
+            // replace sub total into payment popup
+            var grandTotal = parseFloat( $('#total-text').text() ).toFixed(2);
+            // grand total after discount
+            var grandTotalAfterDiscount = parseFloat(grandTotal) - ( parseFloat(grandTotal) * ( parseFloat(customerDiscount) / 100 ) );
 
-        // get selected payment option and add into payment body block
-        choosePaymentOptions();
+            $('#payment-order-info-total-text').text(grandTotal);
+            $('#payment-order-info-grand-total-text').text( parseFloat(grandTotalAfterDiscount).toFixed(2) );
+            $('#payment-order-info-remain-text').text( parseFloat(grandTotalAfterDiscount).toFixed(2) );
+            $('#payment-order-info-discount-text').text(customerDiscount);
 
-        onOrderSubmitValidateDatas();
+            // set attribute id to hidden field
+            var customerId = $('#customer-sidebar-text').attr('customerId');
+            $('#customer').val(customerId);
+    
+            // get selected payment option and add into payment body block
+            choosePaymentOptions();
+    
+            onOrderSubmitValidateDatas();
+
+            $('#payment-modal').modal('show');
+
+        } else {
+            alert('Please choose customer before process payment!');
+        }
 
     });
 
@@ -267,6 +288,34 @@ function changePrVaQtn(numberPadValue){
 }
 
 /**
+ * On customer pos sidebar clicked show customers on 
+ * modal popup.
+ * @return void
+ */
+function onPopupCustomerListClickedConfirmCustomer(){
+    $('.customer-tr-selected').on('click', function(){
+        var customerId = $(this).attr('id');
+        
+        // get all requred datas from tr [customerId + attr]
+        var customerName     = $('#'+customerId+'-name').text();
+        var customerContact  = $('#'+customerId+'-contact').text();
+        var customerPoint    = $('#'+customerId+'-point').text();
+        var customerDiscount = $('#'+customerId+'-discount').text();
+
+        // set customer sidebar text and discount attribute value
+        $('#customer-sidebar-text').text(customerName);
+        $('#customer-sidebar-text').attr('customerId', customerId);
+        $('#customer-sidebar-text').attr( 'customerDiscount', customerDiscount.split('%', 1)[0] );
+
+        // replace discount text
+        $('#discount-text').text('Discount('+customerDiscount+')');
+
+        // hide modal popup
+        $('#customer-modal').modal('hide');
+    });
+}
+
+/**
  * On payment option button selected add into paymen body block.
  * @return void 
  */
@@ -317,7 +366,8 @@ function madeChangePayment(numberPadValue){
     var indexAfterDot = currentMadeTotal.indexOf('.');
 
     // get sub total value
-    var subTotal = parseFloat( $('#total-text').text() );
+    // var subTotal = parseFloat( $('#total-text').text() );
+    var subTotal = parseFloat( $('#payment-order-info-grand-total-text').text() );
 
     // payment number pad value
     var paymentNumberPadValue = numberPadValue;

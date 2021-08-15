@@ -216,7 +216,8 @@
     display: flex;
     padding: .6em;
     flex-flow: row wrap;
-    background-color: rgb(243, 235, 235);
+    color: white;
+    background-color: #0c2865ba;
 }
 /* action pad block */
 .action-pad-block {
@@ -259,6 +260,9 @@
     font-weight: bold;
     text-align: center;
 }
+/* customer modal popup */
+/* modal body */
+
 /* payment */
 .payment-wrapper {
     display: flex;
@@ -334,6 +338,8 @@
     padding-left: 1em;
 }
 .payment-order-info-total-wrapper,
+.payment-order-info-discount-wrapper,
+.payment-order-info-grand-total-wrapper,
 .payment-order-info-remain-wrapper,
 .payment-order-info-change-wrapper
 {

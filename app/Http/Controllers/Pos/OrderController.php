@@ -49,12 +49,25 @@ class OrderController extends Controller
         }
         $incomeArchiveId = $incomeArchiveId->data;
 
-        // get productvariant records
+        // get productvariant record
         $productVariants = PosOrder::getProductVariant( json_decode($request['productVariantIdsArr']) );
         if(!$productVariants->data){
             return back()->with('error', $productVariants->message .', unable to process order!');
         }
         $productVariants = $productVariants->data;
+
+        // get customer record
+        $customer = PosOrder::getCustomer($request['customer']);
+        if(!$customer->data){
+            return back()->with('error', $customer->message);
+        }
+        $customer = $customer->data;
+
+        // validate all request data from front end
+        $requestValidation = PosOrder::validateRequestData($request['paymentOption']);
+        if(!$requestValidation->data){
+            return back()->with('error', $requestValidation->message);
+        }
 
         // save pos order
         try {
@@ -62,7 +75,9 @@ class OrderController extends Controller
 
             $currentUser = Auth::user();
 
+            $discountPercentage = $customer->discount;
             $grandTotal     = number_format( (float)$request['subTotal'], 2, '.', '' );
+            $grandTotal = $grandTotal-($grandTotal * ($discountPercentage/100));
             $paymentReceive = number_format( (float)$request['totalPaymentMade'], 2, '.', '' );
             $paymentReturn  = ($paymentReceive - $grandTotal);
 
@@ -70,8 +85,9 @@ class OrderController extends Controller
                 'grand_total'       => $grandTotal,
                 'payment_receive'   => $paymentReceive,
                 'payment_return'    => $paymentReturn,
-                'customer'          => 'walk in customer',
+                'customer_id'       => $customer->id,
                 'cashier'           => $currentUser->username,
+                'payment_option'   => $requestValidation->paymentOption,
                 'income_archive_id' => $incomeArchiveId,
             ]);
 

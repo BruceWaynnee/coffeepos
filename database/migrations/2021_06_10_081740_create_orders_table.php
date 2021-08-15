@@ -16,13 +16,15 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('order_number')->unique()->nullable();
-            $table->string('customer')->default('walk in customer');
+            $table->unsignedBigInteger('customer_id')->nullable();
             $table->decimal('grand_total',8,2);
             $table->decimal('payment_receive',8,2);
             $table->decimal('payment_return',8,2);
+            $table->string('payment_option');
             $table->string('cashier')->default('satya');
             $table->unsignedBigInteger('income_archive_id')->nullable();
 
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('set null');
             $table->foreign('income_archive_id')->references('id')->on('income_archives')->onDelete('set null');
             $table->timestamps();
         });

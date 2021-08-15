@@ -36,7 +36,7 @@
             @foreach ($orders as $key => $order)                        
             <tr>
                 <td>{{ $order->order_number }}</td>
-                <td>{{ ucwords($order->customer) }}</td>
+                <td>{{ ucwords($order->customer->name) }}</td>
                 <td>$ {{ $order->grand_total }}</td>
                 <td>$ {{ $order->payment_receive }}</td>
                 <td>$ {{ $order->payment_return }}</td>

@@ -22,18 +22,19 @@
         {{-- action pad block --}}
         <div class="action-pad-block">
             {{-- customer  --}}
-            <div class="customer-wrapper">
+            <div id="customer-btn" class="customer-wrapper" data-toggle="modal" data-target="#customer-modal">
                 {{-- icon --}}
                 <div class="icon-wrapper">
                     <img src="{{ asset('img/pos/customer.png') }}" alt="customer icon">
                 </div>
                 {{-- name --}}
                 <div class="name">
-                    <p>Walk In Customer</p>
+                    <p id="customer-sidebar-text" customerDiscount="0" >Choose Customer</p>
                 </div>
             </div>
             {{-- payment --}}
-            <div id="payment-btn" class="payment-wrapper" data-toggle="modal" data-target="#payment-modal">
+            {{-- <div id="payment-btn" class="payment-wrapper" data-toggle="modal" data-target="#payment-modal"> --}}
+            <div id="payment-btn" class="payment-wrapper" data-toggle="modal">
                 <div class="payment-button-wrapper">
                     <img src="{{ asset('img/pos/arrow.png') }}" alt="payment-btn-img">
                 </div>
@@ -67,6 +68,50 @@
     </div>
 </div>
 {{-- END:: POS Order SideBar --}}
+
+{{-- BEGIN::Customer Modal Popup --}}
+<div id="customer-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="customerModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            {{-- modal header --}}
+            <div class="modal-header">
+                <h3 class="modal-title" id="customersModalLabel">Customers</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {{-- modal body --}}
+            <div class="modal-body customer-modal-body-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Contact</th>
+                            <th>Points</th>
+                            <th>Discount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($customers as $customer)
+                            <tr id="{{$customer->id}}" class="cursor-pointer customer-tr-selected">
+                                <td id="{{$customer->id}}-name">{{ ucwords($customer->name) }}</td>
+                                <td id="{{$customer->id}}-contact">{{ strlen($customer->contact) < 9 ? '---' : $customer->contact }}</td>
+                                <td id="{{$customer->id}}-point">{{ $customer->point }} Pt</td>
+                                <td id="{{$customer->id}}-discount">{{ preg_replace("/\.?0+$/", "", $customer->discount) }} %</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            {{-- modal footer where all buttons represent --}}
+            <div class="modal-footer">
+                {{-- confirm customer --}}
+                <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- END::Customer Modal Popup --}}
 
 {{-- BEGIN::Payment Modal Popup --}}
 <div id="payment-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="paymentModelLabel" aria-hidden="true">
@@ -106,7 +151,15 @@
                 <div class="payment-order-info-wrapper">
                     <div class="payment-order-info-total-wrapper">
                         <p class="font-weight-bold mr-2">Total: $</p>
-                        <p id="payment-order-info-total-text" class="text-success">0.00</p>
+                        <p id="payment-order-info-total-text" class="text-info">0.00</p>
+                    </div>
+                    <div class="payment-order-info-discount-wrapper">
+                        <p class="font-weight-bold mr-2">Discount: %</p>
+                        <p id="payment-order-info-discount-text" class="text-info">0</p>
+                    </div>
+                    <div class="payment-order-info-grand-total-wrapper">
+                        <p class="font-weight-bold mr-2">Grand Total: $</p>
+                        <p id="payment-order-info-grand-total-text" class="text-success">0.00</p>
                     </div>
                     <div class="payment-order-info-remain-wrapper">
                         <p class="font-weight-bold mr-2">Remaining: $</p>
@@ -154,7 +207,7 @@
                 {{-- process to order form --}}
                 <form id="make-order-form" action="{{ route('pos-order') }}" method="POST">
                     @csrf
-                    <input id="customer" type="hidden" name="customer" value="walk in customer">
+                    <input id="customer" type="hidden" name="customer" value="">
                     <input id="productVariantIdsArr" type="hidden" name="productVariantIdsArr" value="">
                     <input id="productVariantOrderQtnArr" type="hidden" name="productVariantOrderQtnArr" value="">
                     <input id="subTotal" type="hidden" name="subTotal" value="">
