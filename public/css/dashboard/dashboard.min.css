@@ -9,6 +9,9 @@
     font-style: normal
 }
 
+body {
+    font-family: sans-serif !important;
+}
 .mdi-set,
 .mdi:before {
     display: inline-block;

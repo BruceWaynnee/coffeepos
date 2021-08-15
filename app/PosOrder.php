@@ -26,14 +26,25 @@ class PosOrder extends Model
      */
     protected $fillable = [
         'cashier',
-        'customer',
+        'customer_id',
         'grand_total',
         'order_number',
         'payment_receive',
         'payment_return',
+        'payment_option',
         'income_archive_id',
 
     ];
+
+    /**
+     * Order PAYMENT OPTIONS
+     * @var Array 
+     */
+    public const PAYMENTOPTIONS = [
+        1 => 'cash payment',
+        2 => 'bank payment',
+
+    ];    
 
     /**
      * ########################
@@ -123,6 +134,57 @@ class PosOrder extends Model
 
     // Product Variant Helper Functions [END]
 
+    // Customer Helper Functions [BEING]
+        /**
+         * Get all customer records from database.
+         * @return ObjectRespond [ data: data_result; message = message_result ]
+         */
+        public static function getCustomers(){
+            $respond = (object)[];
+
+            try {
+                $customers = Customer::all();
+                $respond->data    = $customers;
+                $respond->message = 'All customer records found';
+            } catch(Exception $ex) {
+                $respond->data    = false;
+                $respond->message = 'Problem occured while trying to get all customer records!';
+            }
+
+            return $respond;
+        }
+        /**
+         * Get specific customer record based on given id 
+         * from database.
+         * @param Integer $id
+         * @return ObjectRespond [ data: data_result; message = message_result ]
+         */
+        public static function getCustomer($id){
+            $respond = (object)[];
+
+            try {
+                $customer = Customer::findOrFail($id);
+                $respond->data    = $customer;
+                $respond->message = 'Customer record found';
+            } catch(ModelNotFoundException $ex) {
+                $respond->data    = false;
+                $respond->message = 'Customer record not found!';
+            }
+
+            return $respond;
+        }
+
+    // Customer Helper Functions [END]
+
+    /**
+     * Return the id of payment options
+     * @param String $paymentOption 
+     * @return Int $paymentOptionId
+     */
+    public static function getPaymentOptionId($paymentOption){
+        return array_search($paymentOption, self::PAYMENTOPTIONS);
+    }
+
     /**
      * ########################
      *      Relationship
@@ -152,6 +214,47 @@ class PosOrder extends Model
     }
 
     /**
+     * Many orders to one customer.
+     * @return App\Model\Customer
+     */
+    public function customer(){
+        return $this->belongsTo(
+            Customer::class,
+            'customer_id',
+        );
+    }
+
+    /**
      * 
      */
+
+    /**
+     * ####################################
+     *      Fast Validation Functions
+     * ####################################
+     */
+
+    /**
+     * Validate all requests data submit from font end.
+     * @param String $paymentOption
+     * @return ObjectRespond [ data = result_data, message = result_message ]
+     */
+    public static function validateRequestData($paymentOption){
+        $respond = (object)[];
+
+        // validate payment option
+        $paymentOptionFound = PosOrder::getPaymentOptionId( strtolower($paymentOption) );
+        if( !$paymentOptionFound ){
+            $respond->data    = false;
+            $respond->message = 'Payment option invalid or incorrect provided!';
+            return $respond;
+        }
+        
+        $respond->data    = true;
+        $respond->message = 'All request data valid';
+        $respond->paymentOption = strtolower($paymentOption);
+        return $respond;
+    }
+
+
 }

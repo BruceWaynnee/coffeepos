@@ -38,7 +38,7 @@
                 <div class="order-header-info">
                     <p>Order No: <small style="margin-left: .2em;">{{ ucwords($order->order_number) }}</small></p>
                     <p>Date:     <small style="margin-left: 2.3em;">{{ date('d/m/Y', strtotime($order->created_at)) }}</small></p>
-                    <p>Customer: <small style="margin-left: 0em;">{{ ucwords($order->customer) }}</small></p>
+                    <p>Customer: <small style="margin-left: 0em;">{{ ucwords($order->customer->name) }}</small></p>
                     <p>Cashier:  <small style="margin-left: 1em;">{{ ucwords($order->cashier) }}</small></p>
                 </div>
                 <p style="margin: 1em 0 1em 0;">--------------------------------</p>
@@ -81,6 +81,11 @@
                 <div class="pv-order-list-row order-list-header">
                     <div style="flex: 0 1 50%;" class="order-list-col"> 
                         <p style="margin-bottom: 0;">Change $ {{ $order->payment_return }}</p> 
+                    </div>
+                </div>
+                <div class="pv-order-list-row order-list-header">
+                    <div style="flex: 0 1 50%;" class="order-list-col"> 
+                        <p style="margin-bottom: 0;">Pay By <small style="font-size: 14px; margin-left: .5em; font-weight: bold;">: {{ ucwords($order->payment_option) }}</small> </p> 
                     </div>
                 </div>
             </div>

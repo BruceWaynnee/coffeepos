@@ -72,7 +72,6 @@
     </div>
 </body>
 
-
 {{-- custom script --}}
 <script src="{{asset('js/dashboard/global_functions.js')}}"></script>
 <script src="{{asset('js/dashboard/dashboard.min.js')}}"></script>
