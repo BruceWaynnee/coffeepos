@@ -76,6 +76,13 @@ class PermissionTableSeeder extends Seeder
                 Permission::create(['name' => 'delete category']);
             // Category Permissions Seeder [END]
 
+            // Customer Permissions Seeder [BEGIN]
+                Permission::create(['name' => 'view customer']);
+                Permission::create(['name' => 'create customer']);
+                Permission::create(['name' => 'edit customer']);
+                Permission::create(['name' => 'delete customer']);
+            // Customer Permissions Seeder [END]
+
             // User Permissions Seeder [BEGIN]
                 Permission::create(['name' => 'view user']);
                 Permission::create(['name' => 'create user']);

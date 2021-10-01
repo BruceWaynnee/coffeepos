@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Pos;
+namespace App\Http\Controllers\Dashboard;
 
-use App\Category;
 use App\Customer;
 use App\Http\Controllers\Controller;
-use App\Product;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class PosController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,28 +16,14 @@ class PosController extends Controller
      */
     public function index()
     {
-        // get all category records
-        $categories = Category::getCategories();
-        if(!$categories->data){
-            return view('pos/index')->with('error', $categories->message);
-        }
-        $categories = $categories->data;
-
-        // get all product records
-        $products = Product::getProducts();
-        if(!$products->data){
-            return view('pos/index')->with('error', $products->message);
-        }
-        $products = $products->data;
-
-        // get all customer records
+        // get customer records
         $customers = Customer::getCustomers();
         if(!$customers->data){
-            return view('pos/index')->with('error', $customers->message);
+            return view('dashboard/index')->with('error', $customers->message);
         }
         $customers = $customers->data;
-
-        return view( 'pos/index', compact('categories', 'products', 'customers') );
+        
+        return view( 'dashboard/modules/customer/index', compact('customers') );
     }
 
     /**
@@ -46,7 +32,7 @@ class PosController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard/modules/customer/add');
     }
 
     /**
@@ -56,7 +42,35 @@ class PosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
+        // validate all request
+        $requestValidResult = Customer::checkReuqestValidation(
+            $request['name'],
+            $request['discount'],
+            $request['contact'],
+            $request['email'],
+        );
+        if(!$requestValidResult->data){
+            return back()->with('error', $requestValidResult->message);
+        }
+        dd($requestValidResult);
+
+        // save customer
+        try {
+            DB::beginTransaction();
+
+        } catch(QueryException $queryEx) {
+            DB::rollBack();
+            if($queryEx->errorInfo[1] == 1062){
+                $message = 'Customer contact or email already exist!';
+            }else {
+                $message = 'There is a problem while trying to create customer, please contact us to fix the bugs!';
+            }
+            return back()->with('error', $message);
+        }
+        DB::commit();
+        return redirect()->route('customer-list')
+            ->with('success', 'Customer record created successfully');
     }
 
     /**

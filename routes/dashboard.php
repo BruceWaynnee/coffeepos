@@ -35,7 +35,7 @@ Route::middleware('auth')->middleware('permission:access dashboard')->namespace(
     // dashboard router
     Route::get('/', 'DashboardController@index')->name('dashboard-home');
 
-    // product router
+    // product router [begin]
         Route::group([
             'prefix' => 'products',
         ], function(){
@@ -49,8 +49,9 @@ Route::middleware('auth')->middleware('permission:access dashboard')->namespace(
             // product and category relation methods
             Route::get('/{categoryId}', 'ProductController@categoryProductsIndex')->name('category-products-list')->middleware('permission:view product');
         });
+    // product router [end]
 
-    // product variant router
+    // product variant router [begin]
         Route::group([
             'prefix' => 'productvariants',
         ], function(){
@@ -64,8 +65,9 @@ Route::middleware('auth')->middleware('permission:access dashboard')->namespace(
             // product variant and product relation methods
             Route::get('/{productId}', 'ProductVariantController@productVariantsIndex')->name('product-productvariants-list')->middleware('permission:view product-variant');
         });
+    // product variant router [end]
 
-    // type [attributes]
+    // type [attributes] [begin]
         Route::group([
             'prefix' => 'types',
         ], function(){
@@ -77,8 +79,9 @@ Route::middleware('auth')->middleware('permission:access dashboard')->namespace(
             Route::patch('{id}/edit', 'TypeController@update')->name('type-update')->middleware('permission:edit product-type');
             Route::delete('{id}', 'TypeController@destroy')->name('type-delete')->middleware('permission:delete product-type');
         });
+    // type [attributes] [end]
 
-    // size [attributes]
+    // size [attributes] [begin]
         Route::group([
             'prefix' => 'sizes',
         ], function(){
@@ -90,8 +93,9 @@ Route::middleware('auth')->middleware('permission:access dashboard')->namespace(
             Route::patch('{id}/edit', 'SizeController@update')->name('size-update')->middleware('permission:edit product-size');
             Route::delete('{id}', 'SizeController@destroy')->name('size-delete')->middleware('permission:delete product-size');
         });
+    // size [attributes] [end]
 
-    // invoice router
+    // invoice router [begin]
         Route::group([
             'prefix' => 'invoices',
         ], function(){
@@ -103,8 +107,9 @@ Route::middleware('auth')->middleware('permission:access dashboard')->namespace(
             Route::patch('{id}/edit', 'InvoiceController@update')->name('invoice-update');
             Route::delete('{id}', 'InvoiceController@destroy')->name('invoice-delete');        
         });
+    // invoice router [end]
 
-    // order router
+    // order router [begin]
         Route::group([
             'prefix' => 'orders',
         ], function(){
@@ -116,17 +121,19 @@ Route::middleware('auth')->middleware('permission:access dashboard')->namespace(
             Route::patch('{id}/edit', 'OrderController@update')->name('order-update');
             Route::delete('{id}', 'OrderController@destroy')->name('order-delete')->middleware('permission:delete order');
         });
+    // order router [end]
 
-    // income archive router
-    Route::group([
-        'prefix' => 'incomearchives',
-    ], function(){
-        Route::get('/', 'IncomeArchiveController@index')->name('income-archive-list')->middleware('permission:view income-archive');
-        Route::get('{id}/detail', 'IncomeArchiveController@show')->name('income-archive-detail')->middleware('permission:view income-archive');
-        Route::delete('{id}', 'IncomeArchiveController@destroy')->name('income-archive-delete')->middleware('permission:delete income-archive');
-    });
+    // income archive router [begin]
+        Route::group([
+            'prefix' => 'incomearchives',
+        ], function(){
+            Route::get('/', 'IncomeArchiveController@index')->name('income-archive-list')->middleware('permission:view income-archive');
+            Route::get('{id}/detail', 'IncomeArchiveController@show')->name('income-archive-detail')->middleware('permission:view income-archive');
+            Route::delete('{id}', 'IncomeArchiveController@destroy')->name('income-archive-delete')->middleware('permission:delete income-archive');
+        });
+    // income archive router [end]
     
-    // currency router [system settings]
+    // currency router [system settings] [begin]
         Route::group([
             'prefix' => 'currencies',
         ], function(){
@@ -138,8 +145,9 @@ Route::middleware('auth')->middleware('permission:access dashboard')->namespace(
             Route::patch('{id}/edit', 'CurrencyController@update')->name('currency-update');
             Route::delete('{id}', 'CurrencyController@destroy')->name('currency-delete');        
         });
+    // currency router [system settings] [end]
 
-    // sugar-level router [system settings]
+    // sugar-level router [system settings] [begin]
         Route::group([
             'prefix' => 'sugarlevels',
         ], function(){
@@ -151,8 +159,9 @@ Route::middleware('auth')->middleware('permission:access dashboard')->namespace(
             Route::patch('{id}/edit', 'SugarLevelController@update')->name('sugar-level-update');
             Route::delete('{id}', 'SugarLevelController@destroy')->name('sugar-level-delete');        
         });
+    // sugar-level router [system settings] [end]
 
-    // category router [system settings]
+    // category router [system settings] [begin]
         Route::group([
             'prefix' => 'categories',
         ], function(){
@@ -164,21 +173,23 @@ Route::middleware('auth')->middleware('permission:access dashboard')->namespace(
             Route::patch('{id}/edit', 'CategoryController@update')->name('category-update')->middleware('permission:edit category');
             Route::delete('{id}', 'CategoryController@destroy')->name('category-delete')->middleware('permission:delete category');
         });
+    // category router [system settings] [end]
 
-    // customer router [system settings]
+    // customer router [system settings] [begin]
         Route::group([
             'prefix' => 'customers',
         ], function(){
-            Route::get('/', 'CustomerController@index')->name('customer-list');
-            Route::get('/create', 'CustomerController@create')->name('customer-add');
-            Route::get('{id}/detail', 'CustomerController@show')->name('customer-detail');
-            Route::get('{id}/edit', 'CustomerController@edit');
-            Route::post('/create', 'CustomerController@store');
-            Route::patch('{id}/edit', 'CustomerController@update')->name('customer-update');
-            Route::delete('{id}', 'CustomerController@destroy')->name('customer-delete');        
+            Route::get('/', 'CustomerController@index')->name('customer-list')->middleware('permission:view customer');
+            Route::get('/create', 'CustomerController@create')->name('customer-add')->middleware('permission:create customer');
+            Route::post('/create', 'CustomerController@store')->middleware('permission:create customer');
+            Route::get('{id}/edit', 'CustomerController@edit')->middleware('permission:edit customer');
+            Route::patch('{id}/edit', 'CustomerController@update')->name('customer-update')->middleware('permission:edit customer');
+            Route::get('{id}/detail', 'CustomerController@show')->name('customer-detail')->middleware('permission:edit customer');
+            Route::delete('{id}', 'CustomerController@destroy')->name('customer-delete')->middleware('delete customer');
         });
+    // customer router [system settings] [end]
 
-    // user router [system settings / system users]
+    // user router [system settings / system users] [begin]
         Route::group([
             'prefix' => 'users',
         ], function(){
@@ -190,20 +201,22 @@ Route::middleware('auth')->middleware('permission:access dashboard')->namespace(
             Route::patch('{id}/edit', 'UserController@update')->name('user-update')->middleware('permission:edit user');
             Route::delete('{id}', 'UserController@destroy')->name('user-delete')->middleware('permission:delete user');
         });
+    // user router [system settings / system users] [end]
 
-    // role router [system settings / system users]
-    Route::group([
-        'prefix' => 'roles',
-    ], function(){
-        Route::get('/', 'RoleController@index')->name('role-list')->middleware('permission:view role');
-        Route::get('/create', 'RoleController@create')->name('role-add')->middleware('permission:create role');
-        Route::get('{id}/detail', 'RoleController@show')->name('role-detail')->middleware('permission:view role|create role|edit role');
-        Route::get('{id}/edit', 'RoleController@edit')->middleware('permission:edit role');
-        Route::post('/create', 'RoleController@store')->middleware('permission:create role');
-        Route::patch('{id}/edit', 'RoleController@update')->name('role-update')->middleware('permission:edit role');
-        Route::delete('{id}', 'RoleController@destroy')->name('role-delete')->middleware('permission:delete role');
-    });
-
+    // role router [system settings / system users] [begin]
+        Route::group([
+            'prefix' => 'roles',
+        ], function(){
+            Route::get('/', 'RoleController@index')->name('role-list')->middleware('permission:view role');
+            Route::get('/create', 'RoleController@create')->name('role-add')->middleware('permission:create role');
+            Route::get('{id}/detail', 'RoleController@show')->name('role-detail')->middleware('permission:view role|create role|edit role');
+            Route::get('{id}/edit', 'RoleController@edit')->middleware('permission:edit role');
+            Route::post('/create', 'RoleController@store')->middleware('permission:create role');
+            Route::patch('{id}/edit', 'RoleController@update')->name('role-update')->middleware('permission:edit role');
+            Route::delete('{id}', 'RoleController@destroy')->name('role-delete')->middleware('permission:delete role');
+        });
+    // role router [system settings / system users] [end]
+    
 });
 
 ?>

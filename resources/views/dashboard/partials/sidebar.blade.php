@@ -150,11 +150,13 @@
                                     </li>
                                     @endcan
                                     {{-- customer --}}
+                                    @can('view customer')
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">
+                                        <a class="nav-link" href="{{ route('customer-list') }}">
                                             Customer
                                         </a>
                                     </li>
+                                    @endcan
                                     {{-- sugar level --}}
                                     <li class="nav-item">
                                         <a class="nav-link" href="#">
