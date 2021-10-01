@@ -87,12 +87,14 @@
     list-style-type: none;
 }
 .category-ul .category-li {
+    height: 45px;
     flex: 0 1 20%;
     display: flex;
     font-size: 15px;
     cursor: pointer;
     justify-content: center;
     border-left: 1px solid rgb(153, 148, 148);
+    border-right: 1px solid rgb(153, 148, 148);
 }
 .category-ul .category-li a img {
     width: 45px;

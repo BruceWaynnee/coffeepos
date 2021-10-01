@@ -16,8 +16,8 @@
                         <img src="{{ asset('img/pos/home.png') }}" alt="home icon">
                     </a>
                 </li>
-                @foreach ($categories as $category)
-                    <li id="{{$category->id}}" class="category-li">
+                @foreach ($categories as $key => $category)
+                    <li id="{{$category->id}}" class="category-li" style="margin-left: {{ ($key+1)%5 == 0 ? '3.11em;' : '' }}">
                         <a> {{ ucwords($category->name) }} </a> 
                     </li>
                 @endforeach

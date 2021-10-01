@@ -37,12 +37,22 @@
  }
 
  /**
- * Force to enter only alphanumeric and whitespace.
- * @param [Html_Input_Id_Name] inputId
- */
+  * Force to enter only alphanumeric and whitespace.
+  * @param [Html_Input_Id_Name] inputId
+  */
   function onInputAllowStringNumbernWhitespace(inputId){
     $(inputId).on('input', function(e) {
         $(e.target).val($(e.target).val().replace(/[^a-zA-Z0-9 ]/g, ''))
+    })
+ }
+
+ /**
+  * Force to enter only number
+  * @param [Html_Input_Id_Name] inputId
+  */
+ function onInputAllowNumber(inputId){
+    $(inputId).on('input', function(e) {
+        $(e.target).val($(e.target).val().replace(/[^0-9]/g, ''))
     })
  }
 
