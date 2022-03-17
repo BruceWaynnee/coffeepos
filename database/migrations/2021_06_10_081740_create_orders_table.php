@@ -16,6 +16,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('order_number')->unique()->nullable();
+            $table->integer('receipt_number')->default(0);
             $table->unsignedBigInteger('customer_id')->nullable();
             $table->decimal('grand_total',8,2);
             $table->decimal('payment_receive',8,2);

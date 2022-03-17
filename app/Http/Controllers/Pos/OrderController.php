@@ -9,7 +9,6 @@ use App\IncomeArchive;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -49,6 +48,14 @@ class OrderController extends Controller
         }
         $incomeArchiveId = $incomeArchiveId->data;
 
+        // get tracking receipt number in one life cycle
+        $incomeArchive = IncomeArchive::getIncomeArchiveReceiptNumber( $incomeArchiveId );
+        if( !$incomeArchive->data ) {
+            return back()->with('error', $incomeArchive->message);
+        }
+        $receiptNumber = $incomeArchive->data;
+        $incomeArchive = $incomeArchive->incomeArchiveModel;
+
         // get productvariant record
         $productVariants = PosOrder::getProductVariant( json_decode($request['productVariantIdsArr']) );
         if(!$productVariants->data){
@@ -76,10 +83,10 @@ class OrderController extends Controller
             $currentUser = Auth::user();
 
             $discountPercentage = $customer->discount;
-            $grandTotal     = number_format( (float)$request['subTotal'], 2, '.', '' );
-            $grandTotal = $grandTotal-($grandTotal * ($discountPercentage/100));
-            $paymentReceive = number_format( (float)$request['totalPaymentMade'], 2, '.', '' );
-            $paymentReturn  = ($paymentReceive - $grandTotal);
+            $grandTotal         = number_format( (float)$request['subTotal'], 2, '.', '' );
+            $grandTotal         = $grandTotal-($grandTotal * ($discountPercentage/100));
+            $paymentReceive     = number_format( (float)$request['totalPaymentMade'], 2, '.', '' );
+            $paymentReturn      = ($paymentReceive - $grandTotal);
 
             $posOrder = new PosOrder([
                 'grand_total'       => $grandTotal,
@@ -87,8 +94,9 @@ class OrderController extends Controller
                 'payment_return'    => $paymentReturn,
                 'customer_id'       => $customer->id,
                 'cashier'           => $currentUser->username,
-                'payment_option'   => $requestValidation->paymentOption,
+                'payment_option'    => $requestValidation->paymentOption,
                 'income_archive_id' => $incomeArchiveId,
+                'receipt_number'    => $receiptNumber,
             ]);
 
             $posOrder->save();
@@ -112,6 +120,10 @@ class OrderController extends Controller
                 ]);
                 $posOrderDetail->save();
             }
+
+            // update income archive number
+            $incomeArchive->receipt_number = $receiptNumber;
+            $incomeArchive->save();
 
         } catch(QueryException $queryEx) {
             DB::rollBack();

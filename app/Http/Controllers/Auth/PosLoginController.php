@@ -63,8 +63,27 @@ class PosLoginController extends Controller
             try {
                 DB::beginTransaction();
                 $incomeArchive = new IncomeArchive([
-                    'start_date' => $currentTimestamp,
+                    'start_date'     => $currentTimestamp,
                 ]);
+
+                // get latest income archive
+                $previousIncomeArchive = IncomeArchive::latest()->first();
+                if( $previousIncomeArchive != null ) {
+                    // check if the life cycle still alive
+                    $previousIncomeArchiveCloseDate = Carbon::parse( $previousIncomeArchive->end_date )->startOfDay();
+                    $tmpCurrentTimeStamp = $currentTimestamp->startOfDay();
+                    $isOldLifeCycleSystem = $tmpCurrentTimeStamp->diffInDays( $previousIncomeArchiveCloseDate );
+
+                    // keep using old receipt tracking number if a day lifecycle is not yet over 
+                    $isOldLifeCycleSystem  == 0 ?
+                        ( $incomeArchive->receipt_number = $previousIncomeArchive->receipt_number ) : 
+                        null ;
+
+                } else {
+                    // null mean the system create this record for the very first time!
+                    // this rarely happend and would be happend only if all the database been wiped out ( fresh start ).                    
+                }
+
                 $incomeArchive->save();
                 // store session
                 IncomeArchive::createIncomeArciveSession($incomeArchive->id);

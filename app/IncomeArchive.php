@@ -34,6 +34,7 @@ class IncomeArchive extends Model
         'total_revenue',
         'total_net_income',
         'total_order_made',
+        'receipt_number',
 
     ];
 
@@ -80,6 +81,39 @@ class IncomeArchive extends Model
                 $respond->data    = false;
                 $respond->message = 'Income archive record not found!';
             }
+
+            return $respond;
+        }
+
+        /**
+         * Get income archive receipt number,
+         * the range is between [ 01 to 99 ], and automatically 
+         * set the receipt number back to 01 if the current number 
+         * is equalt to 99.
+         * @param Integer $id
+         * @return RespondObject [ data:result_data, message:result_message ]
+         */
+        public static function getIncomeArchiveReceiptNumber($id) {
+            $respond = (object)[];
+
+            // get income archive record
+            $incomeArchive = self::getIncomeArchive($id);
+            if( !$incomeArchive->data ) {
+                return $incomeArchive;
+            }
+            $incomeArchive = $incomeArchive->data;
+
+            // income archive reciept number tracking
+            $latestReceiptNumber = $incomeArchive->receipt_number;
+
+            // receipt number should be in the range of 01 to 99
+            $latestReceiptNumber >= 99 ?
+                $latestReceiptNumber = 1 :
+                $latestReceiptNumber+= 1 ;
+
+            $respond->data               = $latestReceiptNumber;
+            $respond->incomeArchiveModel = $incomeArchive; 
+            $respond->message            = 'Successfuly getting receipt number';
 
             return $respond;
         }

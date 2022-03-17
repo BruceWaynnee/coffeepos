@@ -33,6 +33,7 @@ class PosOrder extends Model
         'payment_return',
         'payment_option',
         'income_archive_id',
+        'receipt_number',
 
     ];
 

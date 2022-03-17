@@ -17,6 +17,7 @@ class CreateIncomeArchivesTable extends Migration
             $table->bigIncrements('id');
             $table->timestamp('start_date');
             $table->timestamp('end_date')->nullable();
+            $table->integer('receipt_number')->default(0);
             $table->string('staff')->nullable();
             $table->integer('total_order_made')->nullable();
             $table->integer('total_revenue')->nullable();

@@ -83,7 +83,7 @@
         <div class="receipt-footer-wrapper">
             <div class="waiting-wrapper">
                 <p>Waiting Number</p>
-                <p>{{ $posOrder->id }}</p>
+                <p>{{ $posOrder->receipt_number }}</p>
             </div>
             <div class="contact-info-wrapper">
                 <p>Developed by Satya IT Solution</p>
