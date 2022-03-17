@@ -15,7 +15,7 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/home';
     public const PosView = '/';
     public const Dashboard = '/dashboard';
-
+    
     /**
      * This namespace is applied to your controller routes.
      *
