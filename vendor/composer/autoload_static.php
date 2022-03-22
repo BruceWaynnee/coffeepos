@@ -5050,6 +5050,7 @@ class ComposerStaticInita1c7f835b96d15f00db605518d897519
         'phpDocumentor\\Reflection\\Types\\This' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/This.php',
         'phpDocumentor\\Reflection\\Types\\Void_' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/Void_.php',
         'phpDocumentor\\Reflection\\Utils' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/Utils.php',
+        'sizeCsvRecordSeeder' => __DIR__ . '/../..' . '/database/seeds/sizeCsvRecordSeeder.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

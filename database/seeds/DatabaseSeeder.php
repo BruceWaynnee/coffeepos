@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             CategoryTableSeeder::class,
             TypeTableSeeder::class,
             SizeTableSeeder::class,
+            // sizeCsvRecordSeeder::class, // this is for database seeder import from csv
             
             // product, product_variants, 
             ProductTableSeeder::class,
