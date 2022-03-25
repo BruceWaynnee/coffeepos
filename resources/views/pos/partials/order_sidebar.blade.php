@@ -29,7 +29,8 @@
                 </div>
                 {{-- name --}}
                 <div class="name">
-                    <p id="customer-sidebar-text" customerDiscount="0" >Choose Customer</p>
+                    {{-- <p id="customer-sidebar-text" customerDiscount="{{ ($walkInCustomer->discount).split('%', 1)[0] }}" customerId="{{ $walkInCustomer->id }}" >{{ ucwords( $walkInCustomer->name ) }}</p> --}}
+                    <p id="customer-sidebar-text" customerDiscount="{{ (int)$walkInCustomer->discount }}" customerId="{{ $walkInCustomer->id }}" >{{ ucwords( $walkInCustomer->name ) }}</p>
                 </div>
             </div>
             {{-- payment --}}

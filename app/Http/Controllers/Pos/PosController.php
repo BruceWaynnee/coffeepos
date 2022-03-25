@@ -30,6 +30,13 @@ class PosController extends Controller
         }
         $products = $products->data;
 
+        // get default customer ( walkin customer )
+        $walkInCustomer = Customer::getWalkInCustomer();
+        if( !$walkInCustomer->data ) {
+            return view('pos/index')->with('error', $walkInCustomer->message);
+        }
+        $walkInCustomer = $walkInCustomer->data;
+
         // get all customer records
         $customers = Customer::getCustomers();
         if(!$customers->data){
@@ -37,7 +44,7 @@ class PosController extends Controller
         }
         $customers = $customers->data;
 
-        return view( 'pos/index', compact('categories', 'products', 'customers') );
+        return view( 'pos/index', compact('categories', 'products', 'customers', 'walkInCustomer') );
     }
 
     /**

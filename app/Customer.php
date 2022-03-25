@@ -77,6 +77,28 @@ class Customer extends Model
             return $respond;
         }
 
+        /**
+         * Get default customer ( walk in customer ) record from database.
+         * @return ObjectRespond [ data: data_result, message: result_message ]
+         */
+        public static function getWalkInCustomer(){
+            $respond = (object)[];
+
+            try {
+                $walkInCustomer   = Customer::where('email', 'walkin@coffee.com')
+                                        ->get()
+                                        ->first();
+                $respond->data    = $walkInCustomer;
+                $respond->message = 'Walk-In customer record found';
+
+            } catch( ModelNotFoundException | Exception $ex ) {
+                $respond->data    = false;
+                $respond->message = 'Walk-In customer not found!';
+            }
+
+            return $respond;
+        }
+
     // Customer Helper Functions [END]
 
     /**====================
