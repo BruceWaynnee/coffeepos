@@ -136,11 +136,13 @@
                             <div id="settings-dropdown" class="submenu collapse" style="">
                                 <ul class="nav flex-column pl-3">
                                     {{-- currency --}}
+                                    @can('view currency')
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">
+                                        <a class="nav-link" href="{{ route('currency-list') }}">
                                             Currency
                                         </a>
                                     </li>
+                                    @endcan
                                     {{-- categories --}}
                                     @can('view category')
                                     <li class="nav-item">

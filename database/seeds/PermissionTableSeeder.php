@@ -76,6 +76,12 @@ class PermissionTableSeeder extends Seeder
                 Permission::create(['name' => 'delete category']);
             // Category Permissions Seeder [END]
 
+            // Currency Permissions Seeder [BEGIN]
+                Permission::create(['name' => 'view currency']);
+                Permission::create(['name' => 'edit currency']);
+                Permission::create(['name' => 'delete currency']);
+            // Currency Permissions Seeder [END]
+
             // Customer Permissions Seeder [BEGIN]
                 Permission::create(['name' => 'view customer']);
                 Permission::create(['name' => 'create customer']);

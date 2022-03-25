@@ -138,10 +138,7 @@ Route::middleware('auth')->middleware('permission:access dashboard')->namespace(
             'prefix' => 'currencies',
         ], function(){
             Route::get('/', 'CurrencyController@index')->name('currency-list');
-            Route::get('/create', 'CurrencyController@create')->name('currency-add');
-            Route::get('{id}/detail', 'CurrencyController@show')->name('currency-detail');
             Route::get('{id}/edit', 'CurrencyController@edit');
-            Route::post('/create', 'CurrencyController@store');
             Route::patch('{id}/edit', 'CurrencyController@update')->name('currency-update');
             Route::delete('{id}', 'CurrencyController@destroy')->name('currency-delete');        
         });
